@@ -23,6 +23,20 @@ $ composer require --dev duncan3dc/github
 ## Getting Started
 
 ```php
+use duncan3dc\GitHub\Api;
+
+require __DIR__ . "/vendor/autoload.php";
+
+# Connect to a GitHub app using the private key
+$api = new Api(1014, file_get_contents("/var/safe/github.pem"));
+
+# List all the organizations this app is installed under
+foreach ($app->getOrganizations() as $organization) {
+    echo $organization->getName() . "\n";
+}
+
+# Get a specific organization/user
+$organization = $app->getOrganization("duncan3dc");
 ```
 
 _Read more at http://duncan3dc.github.io/github/_  

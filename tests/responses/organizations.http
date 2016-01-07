@@ -1,0 +1,265 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Sun, 30 Apr 2017 20:59:13 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 167190
+Status: 200 OK
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4990
+X-RateLimit-Reset: 1493586167
+Cache-Control: private, max-age=60, s-maxage=60
+Vary: Accept, Authorization, Cookie, X-GitHub-OTP, Accept-Encoding
+ETag: "48893eec72c2b2fa8fdf3549a4eeb97a"
+X-GitHub-Media-Type: github.machine-man-preview; format=json
+Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+Access-Control-Allow-Origin: *
+Content-Security-Policy: default-src 'none'
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: deny
+X-XSS-Protection: 1; mode=block
+X-Served-By: 7b641bda7ec2ca7cd9df72d2578baf75
+X-GitHub-Request-Id: D3E4:1129:3C20C51:514DE6C:59065020
+
+[
+  {
+    "id": 240242,
+    "account": {
+      "login": "thephpleague",
+      "id": 527621,
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjUyNzYyMQ==",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/527621?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/thephpleague",
+      "html_url": "https://github.com/thephpleague",
+      "followers_url": "https://api.github.com/users/thephpleague/followers",
+      "following_url": "https://api.github.com/users/thephpleague/following{/other_user}",
+      "gists_url": "https://api.github.com/users/thephpleague/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/thephpleague/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/thephpleague/subscriptions",
+      "organizations_url": "https://api.github.com/users/thephpleague/orgs",
+      "repos_url": "https://api.github.com/users/thephpleague/repos",
+      "events_url": "https://api.github.com/users/thephpleague/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/thephpleague/received_events",
+      "type": "Organization",
+      "site_admin": false
+    },
+    "repository_selection": "selected",
+    "access_tokens_url": "https://api.github.com/installations/240242/access_tokens",
+    "repositories_url": "https://api.github.com/installation/repositories",
+    "html_url": "https://github.com/organizations/thephpleague/settings/installations/240242",
+    "app_id": 14625,
+    "target_id": 527621,
+    "target_type": "Organization",
+    "permissions": {
+      "contents": "read",
+      "metadata": "read"
+    },
+    "events": [
+
+    ],
+    "created_at": "2018-07-11T19:24:59.000Z",
+    "updated_at": "2018-07-11T19:24:59.000Z",
+    "single_file_name": null
+  },
+  {
+    "id": 240241,
+    "account": {
+      "login": "regattadev",
+      "id": 4959742,
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjQ5NTk3NDI=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4959742?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/regattadev",
+      "html_url": "https://github.com/regattadev",
+      "followers_url": "https://api.github.com/users/regattadev/followers",
+      "following_url": "https://api.github.com/users/regattadev/following{/other_user}",
+      "gists_url": "https://api.github.com/users/regattadev/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/regattadev/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/regattadev/subscriptions",
+      "organizations_url": "https://api.github.com/users/regattadev/orgs",
+      "repos_url": "https://api.github.com/users/regattadev/repos",
+      "events_url": "https://api.github.com/users/regattadev/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/regattadev/received_events",
+      "type": "Organization",
+      "site_admin": false
+    },
+    "repository_selection": "all",
+    "access_tokens_url": "https://api.github.com/installations/240241/access_tokens",
+    "repositories_url": "https://api.github.com/installation/repositories",
+    "html_url": "https://github.com/organizations/regattadev/settings/installations/240241",
+    "app_id": 14625,
+    "target_id": 4959742,
+    "target_type": "Organization",
+    "permissions": {
+      "contents": "read",
+      "metadata": "read"
+    },
+    "events": [
+
+    ],
+    "created_at": "2018-07-11T19:24:52.000Z",
+    "updated_at": "2018-07-11T19:24:52.000Z",
+    "single_file_name": null
+  },
+  {
+    "id": 240240,
+    "account": {
+      "login": "kaboodle-solutions",
+      "id": 38961640,
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjM4OTYxNjQw",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/38961640?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/kaboodle-solutions",
+      "html_url": "https://github.com/kaboodle-solutions",
+      "followers_url": "https://api.github.com/users/kaboodle-solutions/followers",
+      "following_url": "https://api.github.com/users/kaboodle-solutions/following{/other_user}",
+      "gists_url": "https://api.github.com/users/kaboodle-solutions/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/kaboodle-solutions/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/kaboodle-solutions/subscriptions",
+      "organizations_url": "https://api.github.com/users/kaboodle-solutions/orgs",
+      "repos_url": "https://api.github.com/users/kaboodle-solutions/repos",
+      "events_url": "https://api.github.com/users/kaboodle-solutions/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/kaboodle-solutions/received_events",
+      "type": "Organization",
+      "site_admin": false
+    },
+    "repository_selection": "all",
+    "access_tokens_url": "https://api.github.com/installations/240240/access_tokens",
+    "repositories_url": "https://api.github.com/installation/repositories",
+    "html_url": "https://github.com/organizations/kaboodle-solutions/settings/installations/240240",
+    "app_id": 14625,
+    "target_id": 38961640,
+    "target_type": "Organization",
+    "permissions": {
+      "contents": "read",
+      "metadata": "read"
+    },
+    "events": [
+
+    ],
+    "created_at": "2018-07-11T19:24:44.000Z",
+    "updated_at": "2018-07-11T19:24:44.000Z",
+    "single_file_name": null
+  },
+  {
+    "id": 240239,
+    "account": {
+      "login": "metroplex-systems",
+      "id": 13820868,
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjEzODIwODY4",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/13820868?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/metroplex-systems",
+      "html_url": "https://github.com/metroplex-systems",
+      "followers_url": "https://api.github.com/users/metroplex-systems/followers",
+      "following_url": "https://api.github.com/users/metroplex-systems/following{/other_user}",
+      "gists_url": "https://api.github.com/users/metroplex-systems/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/metroplex-systems/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/metroplex-systems/subscriptions",
+      "organizations_url": "https://api.github.com/users/metroplex-systems/orgs",
+      "repos_url": "https://api.github.com/users/metroplex-systems/repos",
+      "events_url": "https://api.github.com/users/metroplex-systems/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/metroplex-systems/received_events",
+      "type": "Organization",
+      "site_admin": false
+    },
+    "repository_selection": "all",
+    "access_tokens_url": "https://api.github.com/installations/240239/access_tokens",
+    "repositories_url": "https://api.github.com/installation/repositories",
+    "html_url": "https://github.com/organizations/metroplex-systems/settings/installations/240239",
+    "app_id": 14625,
+    "target_id": 13820868,
+    "target_type": "Organization",
+    "permissions": {
+      "contents": "read",
+      "metadata": "read"
+    },
+    "events": [
+
+    ],
+    "created_at": "2018-07-11T19:24:34.000Z",
+    "updated_at": "2018-07-11T19:24:34.000Z",
+    "single_file_name": null
+  },
+  {
+    "id": 240238,
+    "account": {
+      "login": "tn5250j",
+      "id": 15222331,
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjE1MjIyMzMx",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/15222331?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/tn5250j",
+      "html_url": "https://github.com/tn5250j",
+      "followers_url": "https://api.github.com/users/tn5250j/followers",
+      "following_url": "https://api.github.com/users/tn5250j/following{/other_user}",
+      "gists_url": "https://api.github.com/users/tn5250j/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/tn5250j/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/tn5250j/subscriptions",
+      "organizations_url": "https://api.github.com/users/tn5250j/orgs",
+      "repos_url": "https://api.github.com/users/tn5250j/repos",
+      "events_url": "https://api.github.com/users/tn5250j/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/tn5250j/received_events",
+      "type": "Organization",
+      "site_admin": false
+    },
+    "repository_selection": "all",
+    "access_tokens_url": "https://api.github.com/installations/240238/access_tokens",
+    "repositories_url": "https://api.github.com/installation/repositories",
+    "html_url": "https://github.com/organizations/tn5250j/settings/installations/240238",
+    "app_id": 14625,
+    "target_id": 15222331,
+    "target_type": "Organization",
+    "permissions": {
+      "contents": "read",
+      "metadata": "read"
+    },
+    "events": [
+
+    ],
+    "created_at": "2018-07-11T19:24:21.000Z",
+    "updated_at": "2018-07-11T19:24:21.000Z",
+    "single_file_name": null
+  },
+  {
+    "id": 240236,
+    "account": {
+      "login": "duncan3dc",
+      "id": 546811,
+      "node_id": "MDQ6VXNlcjU0NjgxMQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/546811?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/duncan3dc",
+      "html_url": "https://github.com/duncan3dc",
+      "followers_url": "https://api.github.com/users/duncan3dc/followers",
+      "following_url": "https://api.github.com/users/duncan3dc/following{/other_user}",
+      "gists_url": "https://api.github.com/users/duncan3dc/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/duncan3dc/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/duncan3dc/subscriptions",
+      "organizations_url": "https://api.github.com/users/duncan3dc/orgs",
+      "repos_url": "https://api.github.com/users/duncan3dc/repos",
+      "events_url": "https://api.github.com/users/duncan3dc/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/duncan3dc/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "repository_selection": "all",
+    "access_tokens_url": "https://api.github.com/installations/240236/access_tokens",
+    "repositories_url": "https://api.github.com/installation/repositories",
+    "html_url": "https://github.com/settings/installations/240236",
+    "app_id": 14625,
+    "target_id": 546811,
+    "target_type": "User",
+    "permissions": {
+      "contents": "read",
+      "metadata": "read"
+    },
+    "events": [
+
+    ],
+    "created_at": "2018-07-11T19:23:48.000Z",
+    "updated_at": "2018-07-11T19:23:48.000Z",
+    "single_file_name": null
+  }
+]
