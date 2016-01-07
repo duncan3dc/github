@@ -1,0 +1,20 @@
+{
+    "name": "duncan3dc/github",
+    "description": "A library to interact with the GitHub API",
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "duncan3dc/object-intruder": "^0.3",
+        "maglnet/composer-require-checker": "^1.0",
+        "mockery/mockery": "^1.1",
+        "phpstan/phpstan": "^0.10",
+        "phpunit/phpunit": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {"duncan3dc\\GitHub\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"duncan3dc\\GitHubTests\\": "tests/"}
+    }
+}
