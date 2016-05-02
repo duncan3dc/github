@@ -4,8 +4,10 @@ namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\Organization;
+use duncan3dc\GitHub\RepositoryInterface;
 use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
@@ -196,5 +198,45 @@ class OrganizationTest extends TestCase
         $result = $this->organization->request("POST", "https://api.github.com/test", ["key" => "value"]);
 
         $this->assertSame($response, $result);
+    }
+
+
+    public function testGetRepository()
+    {
+        $params = $this->mockToken();
+
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getBody")->once()->andReturn('{"full_name": "thephpleague/octocat"}');
+
+        $this->client->shouldReceive("request")
+            ->once()
+            ->with("GET", "https://api.github.com/repos/thephpleague/octocat", $params)
+            ->andReturn($response);
+
+        $repository = $this->organization->getRepository("octocat");
+
+        $this->assertInstanceOf(RepositoryInterface::class, $repository);
+        $this->assertSame("thephpleague/octocat", $repository->getFullName());
+    }
+
+
+    public function testGetRepositories()
+    {
+        $params = $this->mockToken();
+
+        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/repositories.http"));
+
+        $this->client->shouldReceive("request")
+            ->once()
+            ->with("GET", "https://api.github.com/installation/repositories", $params)
+            ->andReturn($response);
+
+        $repositories = $this->organization->getRepositories();
+        $repositories = iterator_to_array($repositories);
+
+        $this->assertContainsOnlyInstancesOf(RepositoryInterface::class, $repositories);
+
+        $repository = reset($repositories);
+        $this->assertSame("api", $repository->getName());
     }
 }

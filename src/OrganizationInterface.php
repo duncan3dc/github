@@ -10,4 +10,20 @@ interface OrganizationInterface extends ApiInterface
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * Get all of the repositories for this installation.
+     *
+     * @return RepositoryInterface[]
+     */
+    public function getRepositories(): iterable;
+
+    /**
+     * Get a repository instance.
+     *
+     * @param string $name The name of the repository
+     *
+     * @return RepositoryInterface
+     */
+    public function getRepository(string $name): RepositoryInterface;
 }

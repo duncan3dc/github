@@ -107,4 +107,36 @@ final class Organization implements OrganizationInterface
 
         return $data->token;
     }
+
+
+    /**
+     * Get all of the repositories for this installation.
+     *
+     * @return RepositoryInterface[]
+     */
+    public function getRepositories(): iterable
+    {
+        $repositories = $this->getAll("installation/repositories", [], function (\stdClass $data) {
+            foreach ($data->repositories as $item) {
+                yield Repository::fromApiResponse($item, $this);
+            }
+        });
+
+        foreach ($repositories as $repository) {
+            yield $repository;
+        }
+    }
+
+
+    /**
+     * Get a repository instance.
+     *
+     * @param string $name The name of the repository
+     *
+     * @return RepositoryInterface
+     */
+    public function getRepository(string $name): RepositoryInterface
+    {
+        return Repository::fromName($this->getName(), $name, $this);
+    }
 }
