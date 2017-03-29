@@ -116,4 +116,29 @@ final class Repository implements RepositoryInterface
 
         return "repos/" . $this->getFullName() . "/" . trim($path, "/");
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getBranches(): iterable
+    {
+        $data = $this->getAll("branches");
+
+        foreach ($data as $item) {
+            $url = $this->getUrl("branches/{$item->name}");
+            yield Branch::fromListResponse($item, $url, $this->api);
+        }
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getBranch(string $branch): BranchInterface
+    {
+        $data = $this->get("branches/{$branch}");
+
+        return Branch::fromApiResponse($data, $this->api);
+    }
 }

@@ -3,11 +3,16 @@
 namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\ApiInterface;
+use duncan3dc\GitHub\BranchInterface;
 use duncan3dc\GitHub\Repository;
+use GuzzleHttp\Psr7;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use function iterator_to_array;
+use function json_decode;
+use function json_encode;
 
 class RepositoryTest extends TestCase
 {
@@ -78,5 +83,57 @@ class RepositoryTest extends TestCase
 
         $result = $this->repository->post($input, ["stuff"]);
         $this->assertSame(["stuff" => "data"], (array) $result);
+    }
+
+
+    public function testGetBranches()
+    {
+        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/branches.http"));
+
+        $this->api->shouldReceive("request")
+            ->once()
+            ->with("GET", "repos/github/octocat/branches", [])
+            ->andReturn($response);
+
+        $branches = $this->repository->getBranches();
+        $branches = iterator_to_array($branches);
+
+        $this->assertContainsOnlyInstancesOf(BranchInterface::class, $branches);
+
+        $branch = reset($branches);
+
+        # Ensure this information is available without another API request
+        $this->assertSame("master", $branch->getName());
+        $this->assertSame("6dcb09b5b57875f334f61aebed695e2e4193db5e", $branch->getCommit());
+        $this->assertInternalType("object", $branch->getProtection());
+
+        # Ensure other information can be lazily loaded
+        $data = [
+            "commit" => [
+                "sha" => "e2bd25ff3191f7ec9f353c137a114d599ac7959f",
+                "commit" => [
+                    "committer" => [
+                        "date" => "2017-03-29T12:00:35+00:00",
+                    ],
+                ],
+            ],
+        ];
+        $data = json_decode(json_encode($data));
+        $this->api->shouldReceive("get")->once()->with("repos/github/octocat/branches/master")->andReturn($data);
+        $this->assertSame("2017-03-29", date("Y-m-d", $branch->getDate()));
+        $this->assertSame("e2bd25ff3191f7ec9f353c137a114d599ac7959f", $branch->getCommit());
+    }
+
+
+    public function testGetBranch()
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getBody")->with()->andReturn('{"name":"northlane"}');
+        $this->api->shouldReceive("request")->once()->with("GET", "repos/github/octocat/branches/northlane", [])->andReturn($response);
+
+        $branch = $this->repository->getBranch("northlane");
+
+        $this->assertInstanceOf(BranchInterface::class, $branch);
+        $this->assertSame("northlane", $branch->getName());
     }
 }

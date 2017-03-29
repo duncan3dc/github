@@ -17,4 +17,21 @@ interface RepositoryInterface extends ApiInterface
      * @return string
      */
     public function getFullName(): string;
+
+
+    /**
+     * Get all the branches in this repository.
+     *
+     * @return iterable|BranchInterface[]
+     */
+    public function getBranches(): iterable;
+
+    /**
+     * Get a branch from this repository.
+     *
+     * @param string $branch The name of the branch
+     *
+     * @return BranchInterface
+     */
+    public function getBranch(string $branch): BranchInterface;
 }

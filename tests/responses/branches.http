@@ -1,0 +1,29 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Sun, 30 Apr 2017 20:59:13 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 167190
+Status: 200 OK
+Cache-Control: private, max-age=60, s-maxage=60
+Vary: Accept, Authorization, Cookie, X-GitHub-OTP, Accept-Encoding
+X-GitHub-Media-Type: github.machine-man-preview; format=json
+
+[
+  {
+    "name": "master",
+    "commit": {
+      "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+      "url": "https://api.github.com/repos/octocat/Hello-World/commits/c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc"
+    },
+    "protected": false
+  },
+  {
+    "name": "dev",
+    "commit": {
+      "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+      "url": "https://api.github.com/repos/octocat/Hello-World/commits/c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc"
+    },
+    "protected": true,
+    "protection_url": "https://api.github.com/repos/octocat/Hello-World/branches/dev/protection"
+  }
+]
