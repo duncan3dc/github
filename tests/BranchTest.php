@@ -5,14 +5,17 @@ namespace duncan3dc\GitHubTests;
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\Branch;
 use duncan3dc\GitHub\BranchInterface;
+use duncan3dc\GitHub\DirectoryInterface;
 use duncan3dc\GitHub\Exceptions\LogicException;
+use duncan3dc\GitHub\FileInterface;
+use duncan3dc\GitHub\TreeInterface;
 use duncan3dc\ObjectIntruder\Intruder;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use function json_decode;
 use function json_encode;
-use Psr\Http\Message\ResponseInterface;
 
 class BranchTest extends TestCase
 {
@@ -144,5 +147,94 @@ class BranchTest extends TestCase
 
         $result = $branch->getProtection();
         $this->assertEmpty((array) $result);
+    }
+
+
+    public function testGetTree()
+    {
+        $this->api->shouldReceive("get")->with("http://branch/tree")->andReturn(new \stdClass);
+
+        $tree = $this->branch->getTree();
+        $this->assertInstanceOf(TreeInterface::class, $tree);
+    }
+
+
+    public function testGetDirectories()
+    {
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("getDirectories")->with()->andReturn(["passthru"]);
+
+        $result = $this->branch->getDirectories();
+        $this->assertSame(["passthru"], $result);
+    }
+
+
+    public function testGetDirectory()
+    {
+        $directory = Mockery::mock(DirectoryInterface::class);
+
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("getDirectory")->with("stuff")->andReturn($directory);
+
+        $result = $this->branch->getDirectory("stuff");
+        $this->assertSame($directory, $result);
+    }
+
+
+    public function testHasDirectory1()
+    {
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("hasDirectory")->with("stuff")->andReturn(true);
+
+        $result = $this->branch->hasDirectory("stuff");
+        $this->assertSame(true, $result);
+    }
+    public function testHasDirectory2()
+    {
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("hasDirectory")->with("stuff")->andReturn(false);
+
+        $result = $this->branch->hasDirectory("stuff");
+        $this->assertSame(false, $result);
+    }
+
+
+    public function testGetFiles()
+    {
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("getFiles")->with()->andReturn(["passthru"]);
+
+        $result = $this->branch->getFiles();
+        $this->assertSame(["passthru"], $result);
+    }
+
+
+    public function testGetFile()
+    {
+        $file = Mockery::mock(FileInterface::class);
+
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("getFile")->with("thing")->andReturn($file);
+
+        $result = $this->branch->getFile("thing");
+        $this->assertSame($file, $result);
+    }
+
+
+    public function testHasFile1()
+    {
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("hasFile")->with("thing")->andReturn(true);
+
+        $result = $this->branch->hasFile("thing");
+        $this->assertSame(true, $result);
+    }
+    public function testHasFile2()
+    {
+        $this->branch->tree = Mockery::mock(TreeInterface::class);
+        $this->branch->tree->shouldReceive("hasFile")->with("thing")->andReturn(false);
+
+        $result = $this->branch->hasFile("thing");
+        $this->assertSame(false, $result);
     }
 }

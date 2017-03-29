@@ -32,6 +32,11 @@ final class Branch implements BranchInterface
      */
     private $url;
 
+    /**
+     * @var TreeInterface|null The tree object for the head of the branch.
+     */
+    private $tree;
+
 
     /**
      * Create a new instance from an API request for the full branch data.
@@ -185,5 +190,75 @@ final class Branch implements BranchInterface
         }
 
         return $this->get("protection");
+    }
+
+
+    /**
+     * Get a Tree instance that represents the root of the branch.
+     *
+     * @return TreeInterface
+     */
+    private function getTree(): TreeInterface
+    {
+        if (!$this->tree) {
+            $data = $this->api->get($this->getHead()->tree->url);
+            $this->tree = Tree::fromApiResponse($data, $this->api);
+        }
+
+        return $this->tree;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getDirectories(): iterable
+    {
+        return $this->getTree()->getDirectories();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getDirectory(string $name): DirectoryInterface
+    {
+        return $this->getTree()->getDirectory($name);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function hasDirectory(string $name): bool
+    {
+        return $this->getTree()->hasDirectory($name);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getFiles(): iterable
+    {
+        return $this->getTree()->getFiles();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getFile(string $name): FileInterface
+    {
+        return $this->getTree()->getFile($name);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function hasFile(string $name): bool
+    {
+        return $this->getTree()->hasFile($name);
     }
 }

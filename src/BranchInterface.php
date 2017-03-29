@@ -2,7 +2,7 @@
 
 namespace duncan3dc\GitHub;
 
-interface BranchInterface
+interface BranchInterface extends TreeInterface
 {
     /**
      * Get the name of this branch.
