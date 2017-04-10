@@ -141,4 +141,13 @@ final class Repository implements RepositoryInterface
 
         return Branch::fromApiResponse($data, $this->api);
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getPullRequest(int $number): PullRequestInterface
+    {
+        return new PullRequest($this, $number, $this->api);
+    }
 }

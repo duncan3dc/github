@@ -4,6 +4,7 @@ namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\BranchInterface;
+use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\Repository;
 use GuzzleHttp\Psr7;
 use Mockery;
@@ -135,5 +136,14 @@ class RepositoryTest extends TestCase
 
         $this->assertInstanceOf(BranchInterface::class, $branch);
         $this->assertSame("northlane", $branch->getName());
+    }
+
+
+    public function testGetPullRequest()
+    {
+        $result = $this->repository->getPullRequest("48");
+
+        $this->assertInstanceOf(PullRequest::class, $result);
+        $this->assertSame(48, $result->getNumber());
     }
 }
