@@ -33,5 +33,5 @@ jobs:
 git:
   depth: 5
 
-dist: trusty
+group: travis_latest
 sudo: false
