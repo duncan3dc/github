@@ -60,6 +60,52 @@ class RepositoryTest extends TestCase
     }
 
 
+    public function testIsPrivate1()
+    {
+        $data = (object) [
+            "private" => true,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertTrue($repository->isPrivate());
+    }
+    public function testIsPrivate2()
+    {
+        $data = (object) [
+            "private" => false,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertFalse($repository->isPrivate());
+    }
+    public function testIsPrivate3()
+    {
+        $repository = Repository::fromApiResponse(new \stdClass, $this->api);
+        $this->assertFalse($repository->isPrivate());
+    }
+
+
+    public function testIsPublic1()
+    {
+        $repository = Repository::fromApiResponse(new \stdClass, $this->api);
+        $this->assertTrue($repository->isPublic());
+    }
+    public function testIsPublic2()
+    {
+        $data = (object) [
+            "private" => false,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertTrue($repository->isPublic());
+    }
+    public function testIsPublic3()
+    {
+        $data = (object) [
+            "private" => true,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertFalse($repository->isPublic());
+    }
+
+
     public function urlProvider()
     {
         $data = [

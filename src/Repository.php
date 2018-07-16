@@ -86,6 +86,24 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
+    public function isPrivate(): bool
+    {
+        return $this->data->private ?? false;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function isPublic(): bool
+    {
+        return !$this->isPrivate();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $url = $this->getUrl($url);

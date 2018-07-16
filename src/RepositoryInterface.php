@@ -18,6 +18,19 @@ interface RepositoryInterface extends ApiInterface
      */
     public function getFullName(): string;
 
+    /**
+     * Check if this repository is private.
+     *
+     * @return bool
+     */
+    public function isPrivate(): bool;
+
+    /**
+     * Check if this repository is public.
+     *
+     * @return bool
+     */
+    public function isPublic(): bool;
 
     /**
      * Get all the branches in this repository.
