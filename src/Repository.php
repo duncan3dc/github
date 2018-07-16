@@ -66,9 +66,7 @@ final class Repository implements RepositoryInterface
 
 
     /**
-     * Get the name of this repository.
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getName(): string
     {
@@ -77,9 +75,7 @@ final class Repository implements RepositoryInterface
 
 
     /**
-     * Get the full name of this repository (including the owner).
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getFullName(): string
     {
