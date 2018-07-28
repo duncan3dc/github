@@ -149,6 +149,15 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
+    public function getDefaultBranch(): BranchInterface
+    {
+        return $this->getBranch($this->data->default_branch);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function getBranch(string $branch): BranchInterface
     {
         $data = $this->get("branches/{$branch}");

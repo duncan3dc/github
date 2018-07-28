@@ -49,6 +49,13 @@ interface RepositoryInterface extends ApiInterface
     public function getBranch(string $branch): BranchInterface;
 
     /**
+     * Get the default branch for this repository.
+     *
+     * @return BranchInterface
+     */
+    public function getDefaultBranch(): BranchInterface;
+
+    /**
      * Get a pull request from this repository.
      *
      * @param int $number The unique ID of the pr

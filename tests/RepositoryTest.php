@@ -35,6 +35,7 @@ class RepositoryTest extends TestCase
         $data = (object) [
             "name" => "octocat",
             "full_name" => "github/octocat",
+            "default_branch" => "south",
         ];
         $this->repository = Repository::fromApiResponse($data, $this->api);
     }
@@ -182,6 +183,19 @@ class RepositoryTest extends TestCase
 
         $this->assertInstanceOf(BranchInterface::class, $branch);
         $this->assertSame("northlane", $branch->getName());
+    }
+
+
+    public function testGetDefaultBranch()
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getBody")->with()->andReturn('{"name":"south"}');
+        $this->api->shouldReceive("request")->once()->with("GET", "repos/github/octocat/branches/south", [])->andReturn($response);
+
+        $branch = $this->repository->getDefaultBranch();
+
+        $this->assertInstanceOf(BranchInterface::class, $branch);
+        $this->assertSame("south", $branch->getName());
     }
 
 
