@@ -19,6 +19,13 @@ interface RepositoryInterface extends ApiInterface
     public function getFullName(): string;
 
     /**
+    * Get the description of this repository.
+    *
+    * @return string
+    */
+    public function getDescription(): string;
+
+    /**
      * Check if this repository is private.
      *
      * @return bool
@@ -31,6 +38,13 @@ interface RepositoryInterface extends ApiInterface
      * @return bool
      */
     public function isPublic(): bool;
+
+    /**
+     * Check if this repository is a fork of another.
+     *
+     * @return bool
+     */
+    public function isFork(): bool;
 
     /**
      * Get all the branches in this repository.

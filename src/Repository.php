@@ -86,6 +86,15 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
+    public function getDescription(): string
+    {
+        return (string) $this->data->description;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function isPrivate(): bool
     {
         return $this->data->private ?? false;
@@ -98,6 +107,15 @@ final class Repository implements RepositoryInterface
     public function isPublic(): bool
     {
         return !$this->isPrivate();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function isFork(): bool
+    {
+        return $this->data->fork ?? false;
     }
 
 

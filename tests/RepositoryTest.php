@@ -35,6 +35,7 @@ class RepositoryTest extends TestCase
         $data = (object) [
             "name" => "octocat",
             "full_name" => "github/octocat",
+            "description" => "Blah blah",
             "default_branch" => "south",
         ];
         $this->repository = Repository::fromApiResponse($data, $this->api);
@@ -58,6 +59,13 @@ class RepositoryTest extends TestCase
     {
         $result = $this->repository->getFullName();
         $this->assertSame("github/octocat", $result);
+    }
+
+
+    public function testGetDescription()
+    {
+        $result = $this->repository->getDescription();
+        $this->assertSame("Blah blah", $result);
     }
 
 
@@ -104,6 +112,29 @@ class RepositoryTest extends TestCase
         ];
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertFalse($repository->isPublic());
+    }
+
+
+    public function testIsFork1()
+    {
+        $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
+        $this->assertFalse($repository->isFork());
+    }
+    public function testIsFork2()
+    {
+        $data = (object) [
+            "fork" => true,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertTrue($repository->isFork());
+    }
+    public function testIsFork3()
+    {
+        $data = (object) [
+            "fork" => false,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertFalse($repository->isFork());
     }
 
 
