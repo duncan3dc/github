@@ -191,4 +191,17 @@ final class Repository implements RepositoryInterface
     {
         return new PullRequest($this, $number, $this->api);
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getTags(): iterable
+    {
+        $data = $this->getAll("tags");
+
+        foreach ($data as $item) {
+            yield Tag::fromListResponse($item);
+        }
+    }
 }

@@ -6,6 +6,7 @@ use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\BranchInterface;
 use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\Repository;
+use duncan3dc\GitHub\TagInterface;
 use GuzzleHttp\Psr7;
 use Mockery;
 use Mockery\MockInterface;
@@ -236,5 +237,25 @@ class RepositoryTest extends TestCase
 
         $this->assertInstanceOf(PullRequest::class, $result);
         $this->assertSame(48, $result->getNumber());
+    }
+
+
+    public function testGetTags()
+    {
+        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/tags.http"));
+
+        $this->api->shouldReceive("request")
+            ->once()
+            ->with("GET", "repos/github/octocat/tags", [])
+            ->andReturn($response);
+
+        $tags = $this->repository->getTags();
+        $tags = iterator_to_array($tags);
+
+        $this->assertContainsOnlyInstancesOf(TagInterface::class, $tags);
+
+        $tag = reset($tags);
+        $this->assertSame("0.1.0", $tag->getName());
+        $this->assertSame("252920787ec2cb36e5d14b3209873082d1995374", $tag->getCommit());
     }
 }

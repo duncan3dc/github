@@ -77,4 +77,11 @@ interface RepositoryInterface extends ApiInterface
      * @return PullRequestInterface
      */
     public function getPullRequest(int $number): PullRequestInterface;
+
+    /**
+     * Get all the tags in this repository.
+     *
+     * @return iterable|TagInterface[]
+     */
+    public function getTags(): iterable;
 }

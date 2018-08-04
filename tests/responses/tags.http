@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Sat, 04 Aug 2018 16:37:38 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 433
+Status: 200 OK
+X-RateLimit-Limit: 7550
+X-RateLimit-Remaining: 7142
+X-RateLimit-Reset: 1534092516
+Cache-Control: private, max-age=60, s-maxage=60
+Vary: Accept, Authorization, Cookie, X-GitHub-OTP
+ETag: "1bdea321c77d9c7a07a74b475f030343"
+Last-Modified: Fri, 03 Aug 2018 20:25:40 GMT
+X-GitHub-Request-Id: DE16:789D:12D714:264F53:5B706251
+
+[
+    {
+        "name": "0.1.0",
+        "zipball_url": "https://api.github.com/repos/duncan3dc/github/zipball/0.1.0",
+        "tarball_url": "https://api.github.com/repos/duncan3dc/github/tarball/0.1.0",
+        "commit": {
+            "sha": "252920787ec2cb36e5d14b3209873082d1995374",
+            "url": "https://api.github.com/repos/duncan3dc/github/commits/252920787ec2cb36e5d14b3209873082d1995374"
+        },
+        "node_id": "MDM6UmVmMTM4MDE0MTU1OjAuMS4w"
+    }
+]
