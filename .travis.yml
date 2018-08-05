@@ -19,7 +19,6 @@ install:
 
 script:
   - vendor/bin/phpunit
-  - tests/lint.sh
   - vendor/bin/composer-require-checker
   - vendor/bin/phpstan analyse --level=max src
 
