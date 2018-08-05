@@ -186,7 +186,7 @@ final class Branch implements BranchInterface
     public function getProtection(): \stdClass
     {
         if (!$this->data->protected) {
-            return new \stdClass;
+            return new \stdClass();
         }
 
         return $this->get("protection");

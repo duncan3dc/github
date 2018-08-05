@@ -53,7 +53,7 @@ class DirectoryTest extends TestCase
 
     public function testGetTree()
     {
-        $this->api->shouldReceive("get")->with("http://directory/tree")->andReturn(new \stdClass);
+        $this->api->shouldReceive("get")->with("http://directory/tree")->andReturn(new \stdClass());
 
         $tree = $this->directory->getTree();
         $this->assertInstanceOf(Tree::class, $tree);

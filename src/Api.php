@@ -74,11 +74,11 @@ final class Api implements ApiInterface
      */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
-        $token = (new Builder)
+        $token = (new Builder())
             ->setIssuer((string) $this->app)
             ->setIssuedAt(time())
             ->setExpiration(time() + 600)
-            ->sign(new Sha256, new Key($this->key))
+            ->sign(new Sha256(), new Key($this->key))
             ->getToken();
 
         $params = [

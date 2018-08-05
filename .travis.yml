@@ -21,6 +21,7 @@ script:
   - vendor/bin/phpunit
   - vendor/bin/composer-require-checker
   - vendor/bin/phpstan analyse --level=max src
+  - vendor/bin/phpcs
 
 jobs:
   include:

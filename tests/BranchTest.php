@@ -65,7 +65,7 @@ class BranchTest extends TestCase
 
     public function testFromListResponse()
     {
-        $branch = Branch::fromListResponse(new \stdClass, "", $this->api);
+        $branch = Branch::fromListResponse(new \stdClass(), "", $this->api);
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage("Unable to get the branch information, no URL has been provided");
@@ -152,7 +152,7 @@ class BranchTest extends TestCase
 
     public function testGetTree()
     {
-        $this->api->shouldReceive("get")->with("http://branch/tree")->andReturn(new \stdClass);
+        $this->api->shouldReceive("get")->with("http://branch/tree")->andReturn(new \stdClass());
 
         $tree = $this->branch->getTree();
         $this->assertInstanceOf(TreeInterface::class, $tree);

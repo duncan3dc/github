@@ -88,14 +88,14 @@ class RepositoryTest extends TestCase
     }
     public function testIsPrivate3()
     {
-        $repository = Repository::fromApiResponse(new \stdClass, $this->api);
+        $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertFalse($repository->isPrivate());
     }
 
 
     public function testIsPublic1()
     {
-        $repository = Repository::fromApiResponse(new \stdClass, $this->api);
+        $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertTrue($repository->isPublic());
     }
     public function testIsPublic2()

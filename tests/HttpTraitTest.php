@@ -127,6 +127,4 @@ class HttpTraitTest extends TestCase
         $this->expectException(JsonException::class);
         $this->http->get("http://github.innit", ["key" => "value"]);
     }
-
-
 }
