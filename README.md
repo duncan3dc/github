@@ -2,7 +2,7 @@
 A PHP library to interact with the GitHub API
 
 Full documentation is available at http://duncan3dc.github.io/github/  
-PHPDoc API documentation is also available at [http://duncan3dc.github.io/github/api/](http://duncan3dc.github.io/github/api/namespaces/duncan3dc.Laravel.html)  
+PHPDoc API documentation is also available at [http://duncan3dc.github.io/github/api/](http://duncan3dc.github.io/github/api/namespaces/duncan3dc.GitHub.html)  
 
 [![release](https://poser.pugx.org/duncan3dc/github/version.svg)](https://packagist.org/packages/duncan3dc/github)
 [![build](https://travis-ci.org/duncan3dc/github.svg?branch=master)](https://travis-ci.org/duncan3dc/github)
