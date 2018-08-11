@@ -16,7 +16,7 @@ The recommended method of installing this library is via [Composer](https://getc
 Run the following command from your project root:
 
 ```bash
-$ composer require --dev duncan3dc/github
+$ composer require duncan3dc/github
 ```
 
 
