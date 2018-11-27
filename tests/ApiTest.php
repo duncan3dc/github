@@ -8,12 +8,12 @@ use duncan3dc\GitHub\OrganizationInterface;
 use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Psr7;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use function file_get_contents;
+use function assert;
+use function is_resource;
 use function iterator_to_array;
 use function openssl_pkey_export;
 use function openssl_pkey_new;
@@ -34,6 +34,7 @@ class ApiTest extends TestCase
     {
         # Generate a valid private key for testing
         $ssl = openssl_pkey_new();
+        assert(is_resource($ssl));
         openssl_pkey_export($ssl, $key);
 
         $this->client = Mockery::mock(ClientInterface::class);
@@ -51,6 +52,7 @@ class ApiTest extends TestCase
     public function testConstructor()
     {
         $ssl = openssl_pkey_new();
+        assert(is_resource($ssl));
         openssl_pkey_export($ssl, $key);
         $api = new Api(999, $key);
 
@@ -94,13 +96,13 @@ class ApiTest extends TestCase
 
     public function testGetAll()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/get_all_page1.http"));
+        $response = Helper::getResponse("get_all_page1");
         $this->client->shouldReceive("request")->once()->with("GET", "https://api.github.com/pages", Mockery::on(function (array $params) {
             $this->assertSame(["key" => "value"], $params["query"]);
             return true;
         }))->andReturn($response);
 
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/get_all_page2.http"));
+        $response = Helper::getResponse("get_all_page2");
         $this->client->shouldReceive("request")->once()->with("GET", "https://test.com/?key=value&page=2", Mockery::on(function (array $params) {
             $this->assertNotContains("query", $params);
             return true;
@@ -121,7 +123,7 @@ class ApiTest extends TestCase
     }
     public function testGetAll2()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/get_all.http"));
+        $response = Helper::getResponse("get_all");
         $this->client->shouldReceive("request")->once()->with("GET", "https://api.github.com/pages", Mockery::on(function (array $params) {
             $this->assertSame(["key" => "value"], $params["query"]);
             return true;
@@ -171,7 +173,7 @@ class ApiTest extends TestCase
 
     public function testGetOrganizations()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/organizations.http"));
+        $response = Helper::getResponse("organizations");
 
         $this->client->shouldReceive("request")
             ->once()
@@ -183,13 +185,14 @@ class ApiTest extends TestCase
         $this->assertContainsOnlyInstancesOf(OrganizationInterface::class, $organizations);
 
         $organization = reset($organizations);
+        assert($organization instanceof OrganizationInterface);
         $this->assertSame("thephpleague", $organization->getName());
     }
 
 
     public function testGetOrganization1()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/organizations.http"));
+        $response = Helper::getResponse("organizations");
 
         $this->client->shouldReceive("request")
             ->once()
@@ -203,7 +206,7 @@ class ApiTest extends TestCase
     }
     public function testGetOrganization2()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/organizations.http"));
+        $response = Helper::getResponse("organizations");
 
         $this->client->shouldReceive("request")
             ->once()

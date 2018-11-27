@@ -50,7 +50,7 @@ class BranchTest extends TestCase
             ],
             "protected" => 1,
         ];
-        $data = json_decode(json_encode($data));
+        $data = json_decode((string) json_encode($data));
         $branch = Branch::fromApiResponse($data, $this->api);
 
         $this->branch = new Intruder($branch);

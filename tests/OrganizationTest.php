@@ -7,7 +7,6 @@ use duncan3dc\GitHub\Organization;
 use duncan3dc\GitHub\RepositoryInterface;
 use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
@@ -224,7 +223,7 @@ class OrganizationTest extends TestCase
     {
         $params = $this->mockToken();
 
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/repositories.http"));
+        $response = Helper::getResponse("repositories");
 
         $this->client->shouldReceive("request")
             ->once()

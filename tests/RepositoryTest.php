@@ -6,8 +6,8 @@ use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\BranchInterface;
 use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\Repository;
+use duncan3dc\GitHub\RepositoryInterface;
 use duncan3dc\GitHub\TagInterface;
-use GuzzleHttp\Psr7;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ use function json_encode;
 class RepositoryTest extends TestCase
 {
     /**
-     * @var Repository The instance we are testing.
+     * @var RepositoryInterface The instance we are testing.
      */
     private $repository;
 
@@ -168,7 +168,7 @@ class RepositoryTest extends TestCase
 
     public function testGetBranches()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/branches.http"));
+        $response = Helper::getResponse("branches");
 
         $this->api->shouldReceive("request")
             ->once()
@@ -198,7 +198,7 @@ class RepositoryTest extends TestCase
                 ],
             ],
         ];
-        $data = json_decode(json_encode($data));
+        $data = json_decode((string) json_encode($data));
         $this->api->shouldReceive("get")->once()->with("repos/github/octocat/branches/master")->andReturn($data);
         $this->assertSame("2017-03-29", date("Y-m-d", $branch->getDate()));
         $this->assertSame("e2bd25ff3191f7ec9f353c137a114d599ac7959f", $branch->getCommit());
@@ -233,7 +233,7 @@ class RepositoryTest extends TestCase
 
     public function testGetPullRequest()
     {
-        $result = $this->repository->getPullRequest("48");
+        $result = $this->repository->getPullRequest(48);
 
         $this->assertInstanceOf(PullRequest::class, $result);
         $this->assertSame(48, $result->getNumber());
@@ -242,7 +242,7 @@ class RepositoryTest extends TestCase
 
     public function testGetTags()
     {
-        $response = Psr7\parse_response(file_get_contents(__DIR__ . "/responses/tags.http"));
+        $response = Helper::getResponse("tags");
 
         $this->api->shouldReceive("request")
             ->once()

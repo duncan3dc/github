@@ -6,11 +6,11 @@ use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\PullRequestInterface;
 use duncan3dc\GitHub\RepositoryInterface;
-use function iterator_to_array;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use function iterator_to_array;
 
 class PullRequestTest extends TestCase
 {
@@ -31,7 +31,7 @@ class PullRequestTest extends TestCase
         $this->repository = Mockery::mock(RepositoryInterface::class);
         $this->repository->shouldReceive("getFullName")->with()->andReturn("github/octocat");
 
-        $this->pull = new PullRequest($this->repository, "27", $this->api);
+        $this->pull = new PullRequest($this->repository, 27, $this->api);
     }
 
 
