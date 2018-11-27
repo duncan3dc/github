@@ -2,8 +2,8 @@
 
 namespace duncan3dc\GitHub;
 
-use function base64_decode;
 use duncan3dc\GitHub\Exceptions\UnexpectedValueException;
+use function base64_decode;
 
 final class File implements FileInterface
 {
@@ -93,7 +93,7 @@ final class File implements FileInterface
     {
         if ($this->contents === null) {
             $data = $this->api->get($this->data->url);
-            $content = base64_decode($data->content);
+            $content = base64_decode($data->content, true);
             if ($content === false) {
                 throw new UnexpectedValueException("Unable to decode the file contents from the GitHub API response");
             }

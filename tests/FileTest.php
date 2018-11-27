@@ -3,6 +3,7 @@
 namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\ApiInterface;
+use duncan3dc\GitHub\Exceptions\UnexpectedValueException;
 use duncan3dc\GitHub\File;
 use duncan3dc\GitHub\FileInterface;
 use Mockery;
@@ -86,5 +87,13 @@ class FileTest extends TestCase
         # Ensure a second call doesn't hit the api, and still returns the contents
         $contents = $this->file->getContents();
         $this->assertSame("hello world\n", $contents);
+    }
+    public function testGetContents3()
+    {
+        $this->api->shouldReceive("get")->once()->with("http://test.com/")->andReturn((object) ["content" => "@"]);
+
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage("Unable to decode the file contents from the GitHub API response");
+        $this->file->getContents();
     }
 }
