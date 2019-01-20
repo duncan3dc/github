@@ -79,6 +79,21 @@ trait HttpTrait
 
 
     /**
+     * Send a PATCH request and return the response.
+     *
+     * @param string $url The url to issue the request to
+     * @param array $data The parameters to send with the request
+     *
+     * @return \stdClass
+     */
+    public function patch(string $url, array $data = []): \stdClass
+    {
+        $response = $this->request("PATCH", $url, $data);
+        return $this->response($response);
+    }
+
+
+    /**
      * Send a DELETE request and return the response.
      *
      * @param string $url The url to issue the request to

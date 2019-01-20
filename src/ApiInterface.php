@@ -38,6 +38,16 @@ interface ApiInterface
     public function put(string $url, array $data = []): \stdClass;
 
     /**
+     * Send a PATCH request and return the response.
+     *
+     * @param string $url The url to issue the request to (https://api.github.com is optional)
+     * @param array $data The parameters to send with the request
+     *
+     * @return \stdClass
+     */
+    public function patch(string $url, array $data = []): \stdClass;
+
+    /**
      * Send a DELETE request and return the response.
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)

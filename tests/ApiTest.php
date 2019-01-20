@@ -155,6 +155,22 @@ class ApiTest extends TestCase
     }
 
 
+    public function testPatch()
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getBody")->once()->andReturn('{"name": "new", "date": "tomorrow"}');
+        $this->client->shouldReceive("request")->once()->with("PATCH", "https://test.com", Mockery::on(function (array $params) {
+            $this->assertSame(["update" => "please"], $params["json"]);
+            return true;
+        }))->andReturn($response);
+
+        $result = $this->api->patch("https://test.com", ["update" => "please"]);
+
+        $this->assertSame("new", $result->name);
+        $this->assertSame("tomorrow", $result->date);
+    }
+
+
     public function testDelete()
     {
         $response = Mockery::mock(ResponseInterface::class);

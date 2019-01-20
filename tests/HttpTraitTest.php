@@ -95,6 +95,23 @@ class HttpTraitTest extends TestCase
     }
 
 
+    public function testPatch1()
+    {
+        $this->setupResponse("PATCH", '{"result":"yep"}');
+
+        $result = $this->http->patch("http://github.innit", ["key" => "value"]);
+
+        $this->assertSame(["result" => "yep"], (array) $result);
+    }
+    public function testPatch2()
+    {
+        $this->setupResponse("PATCH", '{"WHAT_IS_THIS}');
+
+        $this->expectException(JsonException::class);
+        $this->http->patch("http://github.innit", ["key" => "value"]);
+    }
+
+
     public function testDelete1()
     {
         $this->setupResponse("DELETE", '{"result":"yep"}');
