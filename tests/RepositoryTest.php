@@ -158,6 +158,7 @@ class RepositoryTest extends TestCase
     public function testRequest($input, $expected)
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->andReturn('{"stuff": "data"}');
         $this->api->shouldReceive("request")->with("POST", $expected, ["stuff"])->andReturn($response);
 
@@ -208,6 +209,7 @@ class RepositoryTest extends TestCase
     public function testGetBranch()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->with()->andReturn('{"name":"northlane"}');
         $this->api->shouldReceive("request")->once()->with("GET", "repos/github/octocat/branches/northlane", [])->andReturn($response);
 
@@ -221,6 +223,7 @@ class RepositoryTest extends TestCase
     public function testGetDefaultBranch()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->with()->andReturn('{"name":"south"}');
         $this->api->shouldReceive("request")->once()->with("GET", "repos/github/octocat/branches/south", [])->andReturn($response);
 

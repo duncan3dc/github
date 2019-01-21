@@ -85,6 +85,7 @@ class PullRequestTest extends TestCase
     public function testGetFiles()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getHeader")->once()->with("Link")->andReturn(null);
         $response->shouldReceive("getBody")->once()->with()->andReturn('["file"]');
 
@@ -100,6 +101,7 @@ class PullRequestTest extends TestCase
     public function testGetComments()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getHeader")->once()->with("Link")->andReturn(null);
         $response->shouldReceive("getBody")->once()->with()->andReturn('["comment"]');
 
@@ -123,6 +125,7 @@ class PullRequestTest extends TestCase
     public function testGetCommit()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{"head":{"sha":"def456"}}');
 
         $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
@@ -136,6 +139,7 @@ class PullRequestTest extends TestCase
         $pull = $this->pull->withCommit("abc123");
 
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{}');
 
         $this->api->shouldReceive("request")

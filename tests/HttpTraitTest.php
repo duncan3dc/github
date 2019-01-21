@@ -52,6 +52,7 @@ class HttpTraitTest extends TestCase
     private function setupResponse(string $method, string $json): void
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->with()->andReturn($json);
 
         $this->api->shouldReceive("request")
@@ -143,5 +144,20 @@ class HttpTraitTest extends TestCase
 
         $this->expectException(JsonException::class);
         $this->http->get("http://github.innit", ["key" => "value"]);
+    }
+
+
+    public function testEmptyResponse()
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(204);
+
+        $this->api->shouldReceive("request")
+            ->once()
+            ->with("GET", "http://github.innit", [])
+            ->andReturn($response);
+
+        $result = $this->http->get("http://github.innit");
+        $this->assertInstanceOf(\stdClass::class, $result);
     }
 }

@@ -33,6 +33,10 @@ trait HttpTrait
      */
     private function response(ResponseInterface $response): \stdClass
     {
+        if ($response->getStatusCode() === 204) {
+            return new \stdClass();
+        }
+
         $data = json_decode($response->getBody());
 
         $error = json_last_error();

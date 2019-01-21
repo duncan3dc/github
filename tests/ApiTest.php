@@ -65,6 +65,7 @@ class ApiTest extends TestCase
     public function testPost()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "yep", "date": "today"}');
         $this->client->shouldReceive("request")->once()->with("POST", "https://test.com", Mockery::on(function (array $params) {
             $this->assertSame(["ok"], $params["json"]);
@@ -81,6 +82,7 @@ class ApiTest extends TestCase
     public function testGet()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "yep", "date": "today"}');
         $this->client->shouldReceive("request")->once()->with("GET", "https://test.com", Mockery::on(function (array $params) {
             $this->assertSame(["ok"], $params["query"]);
@@ -142,6 +144,7 @@ class ApiTest extends TestCase
     public function testPut()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "new", "date": "tomorrow"}');
         $this->client->shouldReceive("request")->once()->with("PUT", "https://test.com", Mockery::on(function (array $params) {
             $this->assertSame(["create" => "please"], $params["json"]);
@@ -158,6 +161,7 @@ class ApiTest extends TestCase
     public function testPatch()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "new", "date": "tomorrow"}');
         $this->client->shouldReceive("request")->once()->with("PATCH", "https://test.com", Mockery::on(function (array $params) {
             $this->assertSame(["update" => "please"], $params["json"]);
@@ -174,6 +178,7 @@ class ApiTest extends TestCase
     public function testDelete()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "yep", "date": "today"}');
         $this->client->shouldReceive("request")->once()->with("DELETE", "https://test.com", Mockery::on(function (array $params) {
             $this->assertSame(["ok"], $params["json"]);

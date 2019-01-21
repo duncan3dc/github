@@ -205,6 +205,7 @@ class OrganizationTest extends TestCase
         $params = $this->mockToken();
 
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"full_name": "thephpleague/octocat"}');
 
         $this->client->shouldReceive("request")

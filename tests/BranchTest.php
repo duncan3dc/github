@@ -128,6 +128,7 @@ class BranchTest extends TestCase
     public function testGetProtection1()
     {
         $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->with()->andReturn('{"settings":"protected"}');
 
         $this->api->shouldReceive("request")
