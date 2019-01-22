@@ -22,10 +22,14 @@ script:
   - vendor/bin/composer-require-checker
   - vendor/bin/phpstan analyse --level=max src
   - vendor/bin/phpstan analyse --level=max --configuration=phpstan-tests.neon tests
-  - vendor/bin/phpcs
 
 jobs:
   include:
+
+    - stage: coding standards
+      script:
+        - vendor/bin/phpcs src tests
+
     - stage: coverage
       script:
         - vendor/bin/phpunit --coverage-clover=coverage.xml
