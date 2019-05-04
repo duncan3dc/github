@@ -32,12 +32,12 @@ final class Organization implements OrganizationInterface
     /**
      * @var string The current installation access token.
      */
-    private $token;
+    private $token = "";
 
     /**
      * @var int $tokenExpires When the current installation access token expires.
      */
-    private $tokenExpires;
+    private $tokenExpires = 0;
 
 
     /**
@@ -96,7 +96,7 @@ final class Organization implements OrganizationInterface
     private function getToken(): string
     {
         # If we already have a token, and it's not expired yet then use it
-        if ($this->token && $this->tokenExpires > time()) {
+        if ($this->token !== "" && $this->tokenExpires > time()) {
             return $this->token;
         }
 
