@@ -11,6 +11,7 @@ use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Psr\Http\Message\ResponseInterface;
 use function count;
 use function iterator_to_array;
+use Psr\SimpleCache\CacheInterface;
 use function substr;
 use function time;
 use function trim;
@@ -34,6 +35,9 @@ final class Api implements ApiInterface
      */
     private $client;
 
+    /** @Var CacheInterface|null */
+    private $cache;
+
     /**
      * @var OrganizationInterface[] The organizations this app is installed under.
      */
@@ -46,8 +50,9 @@ final class Api implements ApiInterface
      * @param int $app The App ID to access the GitHub API via.
      * @param string $key The app key (.pem file contents)
      * @param ClientInterface $client The HTTP client to communicate via
+     * @param CacheInterface $cache
      */
-    public function __construct(int $app, string $key, ClientInterface $client = null)
+    public function __construct(int $app, string $key, ClientInterface $client = null, CacheInterface $cache = null)
     {
         $this->app = $app;
         $this->key = $key;
@@ -60,6 +65,8 @@ final class Api implements ApiInterface
             ]);
         }
         $this->client = $client;
+
+        $this->cache = $cache;
     }
 
 
@@ -115,7 +122,7 @@ final class Api implements ApiInterface
 
             $organizations = $this->getAll("/app/installations", [], function ($items) {
                 foreach ($items as $data) {
-                    yield new Organization($data, $this, $this->client);
+                    yield new Organization($data, $this, $this->client, $this->cache);
                 }
             });
 

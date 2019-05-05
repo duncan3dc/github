@@ -4,6 +4,7 @@ namespace duncan3dc\GitHub;
 
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\SimpleCache\CacheInterface;
 use function count;
 use function strtotime;
 use function substr;
@@ -29,6 +30,9 @@ final class Organization implements OrganizationInterface
      */
     private $client;
 
+    /** @var CacheInterface|null */
+    private $cache;
+
     /**
      * @var string The current installation access token.
      */
@@ -46,12 +50,14 @@ final class Organization implements OrganizationInterface
      * @var \stdClass $data This organization's data returned from the API
      * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
+     * @param CacheInterface $cache
      */
-    public function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client)
+    public function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null)
     {
         $this->data = $data;
         $this->api = $api;
         $this->client = $client;
+        $this->cache = $cache;
     }
 
 
@@ -95,6 +101,11 @@ final class Organization implements OrganizationInterface
      */
     private function getToken(): string
     {
+        if ($this->token === "" && $this->cache) {
+            $this->token = $this->cache->get("github-token-" . $this->getName(), "");
+            $this->tokenExpires = $this->cache->get("github-token-expires-" . $this->getName(), 0);
+        }
+
         # If we already have a token, and it's not expired yet then use it
         if ($this->token !== "" && $this->tokenExpires > time()) {
             return $this->token;
@@ -104,6 +115,11 @@ final class Organization implements OrganizationInterface
 
         $this->token = $data->token;
         $this->tokenExpires = strtotime($data->expires_at);
+
+        if ($this->cache) {
+            $this->cache->set("github-token-" . $this->getName(), $this->token);
+            $this->cache->set("github-token-expires-" . $this->getName(), $this->tokenExpires);
+        }
 
         return $data->token;
     }

@@ -9,7 +9,7 @@ parameters:
     - '/Call to method PHPUnit\\Framework\\Assert::assertSame\(\) with array(.*) and iterable.* will always evaluate to false/'
 
     - '/Call to private method getToken\(\) of class duncan3dc\\GitHub\\Organization/'
-    - '/Access to private property duncan3dc\\GitHub\\Organization::\$token/'
+    - '/Access to private property duncan3dc\\GitHub\\Organization::\$(token|cache)/'
     - '/Access to an undefined property duncan3dc\\GitHub\\DirectoryInterface::\$tree/'
     - '/Access to an undefined property duncan3dc\\GitHub\\BranchInterface::\$tree/'
     - '/Call to an undefined method duncan3dc\\GitHub\\BranchInterface::getUrl\(\)/'

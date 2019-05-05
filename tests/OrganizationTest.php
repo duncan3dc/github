@@ -11,6 +11,7 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class OrganizationTest extends TestCase
 {
@@ -113,6 +114,74 @@ class OrganizationTest extends TestCase
         $this->organization->getToken();
         $this->assertSame("DEF456", $this->organization->token);
         $this->assertSame(1490875235, $this->organization->tokenExpires);
+    }
+
+
+    /**
+     * Ensure the cache is used is available.
+     */
+    public function testGetToken4(): void
+    {
+        $cache = Mockery::mock(CacheInterface::class);
+        $this->organization->cache = $cache;
+
+        $expires = time() + 600;
+        $cache->shouldReceive("get")->once()->with("github-token-thephpleague", "")->andReturn("CACHED123");
+        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", "")->andReturn($expires);
+
+        $this->organization->getToken();
+        $this->assertSame("CACHED123", $this->organization->token);
+        $this->assertSame($expires, $this->organization->tokenExpires);
+    }
+
+
+    /**
+     * Ensure empty cache is updated.
+     */
+    public function testGetToken5(): void
+    {
+        $cache = Mockery::mock(CacheInterface::class);
+        $this->organization->cache = $cache;
+
+        $cache->shouldReceive("get")->once()->with("github-token-thephpleague", "")->andReturn("");
+        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", "")->andReturn("");
+
+        $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
+            "token" => "ABC123",
+            "expires_at" => "2017-03-29T12:00:35+00:00",
+        ]);
+
+        $cache->shouldReceive("set")->once()->with("github-token-thephpleague", "ABC123");
+        $cache->shouldReceive("set")->once()->with("github-token-expires-thephpleague", 1490788835);
+
+        $this->organization->getToken();
+        $this->assertSame("ABC123", $this->organization->token);
+        $this->assertSame(1490788835, $this->organization->tokenExpires);
+    }
+
+
+    /**
+     * Ensure expired cache is updated.
+     */
+    public function testGetToken6(): void
+    {
+        $cache = Mockery::mock(CacheInterface::class);
+        $this->organization->cache = $cache;
+
+        $cache->shouldReceive("get")->once()->with("github-token-thephpleague", "")->andReturn("OLD123");
+        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", "")->andReturn(1490788000);
+
+        $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
+            "token" => "ABC123",
+            "expires_at" => "2017-03-29T12:00:35+00:00",
+        ]);
+
+        $cache->shouldReceive("set")->once()->with("github-token-thephpleague", "ABC123");
+        $cache->shouldReceive("set")->once()->with("github-token-expires-thephpleague", 1490788835);
+
+        $this->organization->getToken();
+        $this->assertSame("ABC123", $this->organization->token);
+        $this->assertSame(1490788835, $this->organization->tokenExpires);
     }
 
 
