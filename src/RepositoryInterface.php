@@ -47,6 +47,13 @@ interface RepositoryInterface extends ApiInterface
     public function isFork(): bool;
 
     /**
+     * Check if this repository is archived.
+     *
+     * @return bool
+     */
+    public function isArchived(): bool;
+
+    /**
      * Get all the branches in this repository.
      *
      * @return iterable|BranchInterface[]

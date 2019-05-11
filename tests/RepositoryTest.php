@@ -139,6 +139,29 @@ class RepositoryTest extends TestCase
     }
 
 
+    public function testIsArchived1(): void
+    {
+        $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
+        $this->assertFalse($repository->isArchived());
+    }
+    public function testIsArchived2(): void
+    {
+        $data = (object) [
+            "archived" => true,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertTrue($repository->isArchived());
+    }
+    public function testIsArchived3(): void
+    {
+        $data = (object) [
+            "archived" => false,
+        ];
+        $repository = Repository::fromApiResponse($data, $this->api);
+        $this->assertFalse($repository->isArchived());
+    }
+
+
     public function urlProvider()
     {
         $data = [

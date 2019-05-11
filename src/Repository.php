@@ -122,6 +122,15 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
+    public function isArchived(): bool
+    {
+        return $this->data->archived ?? false;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $url = $this->getUrl($url);
