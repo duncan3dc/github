@@ -3,9 +3,13 @@
 namespace duncan3dc\GitHub;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
+use function array_key_exists;
 use function count;
+use function print_r;
+use function sha1;
 use function strtotime;
 use function substr;
 use function time;
@@ -90,7 +94,49 @@ final class Organization implements OrganizationInterface
             $url = "https://api.github.com/" . trim($url, "/");
         }
 
-        return $this->client->request($method, $url, $params);
+        $response = $this->cache($method, $url, $params);
+
+        return $response;
+    }
+
+
+    /**
+     * @param string $method
+     * @param string $url
+     * @param array $params
+     *
+     * @return ResponseInterface
+     */
+    private function cache(string $method, string $url, array $params): ResponseInterface
+    {
+        if ($this->cache === null || $method !== "GET") {
+            return $this->client->request($method, $url, $params);
+        }
+
+        $content = "{$method}_{$url}_";
+        if (array_key_exists("query", $params)) {
+            $content .= print_r($params["query"], true);
+        }
+        $cacheKey = sha1($content);
+
+        $cachedResponse = $this->cache->get($cacheKey);
+
+        if ($cachedResponse) {
+            $cachedResponse = Psr7\parse_response($cachedResponse);
+            $params["headers"]["If-None-Match"] = $cachedResponse->getHeaderLine("ETag");
+        }
+
+        $response = $this->client->request($method, $url, $params);
+
+        if ($response->getStatusCode() === 304) {
+            return $cachedResponse;
+        }
+
+        if ($response->hasHeader("ETag")) {
+            $this->cache->set($cacheKey, Psr7\str($response));
+        }
+
+        return $response;
     }
 
 

@@ -21,6 +21,7 @@
         "php": "^7.1"
     },
     "require-dev": {
+        "duncan3dc/cache": "^0.6.1",
         "duncan3dc/object-intruder": "^0.3",
         "maglnet/composer-require-checker": "^2.0",
         "mockery/mockery": "^1.2",
@@ -28,7 +29,7 @@
         "phpstan/phpstan-mockery": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
         "squizlabs/php_codesniffer": "^3.4",
-        "phpunit/phpunit": "^7.2"
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-4": {"duncan3dc\\GitHub\\": "src/"}
