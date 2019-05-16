@@ -84,7 +84,7 @@ final class Api implements ApiInterface
         $token = (new Builder())
             ->setIssuer((string) $this->app)
             ->setIssuedAt(time())
-            ->setExpiration(time() + 600)
+            ->setExpiration(time() + 300)
             ->sign(new Sha256(), new Key($this->key))
             ->getToken();
 
