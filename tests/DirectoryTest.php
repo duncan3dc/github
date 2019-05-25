@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
 {
-    /** @var DirectoryInterface */
+    /** @var DirectoryInterface|Intruder */
     private $directory;
 
     /** @var ApiInterface|MockInterface */
@@ -62,11 +62,12 @@ class DirectoryTest extends TestCase
 
     public function testGetDirectories()
     {
+        $passthru = Mockery::mock(DirectoryInterface::class);
         $this->directory->tree = Mockery::mock(TreeInterface::class);
-        $this->directory->tree->shouldReceive("getDirectories")->with()->andReturn(["passthru"]);
+        $this->directory->tree->shouldReceive("getDirectories")->with()->andReturn([$passthru]);
 
         $result = $this->directory->getDirectories();
-        $this->assertSame(["passthru"], $result);
+        $this->assertSame([$passthru], $result);
     }
 
 
@@ -102,11 +103,12 @@ class DirectoryTest extends TestCase
 
     public function testGetFiles()
     {
+        $passthru = Mockery::mock(FileInterface::class);
         $this->directory->tree = Mockery::mock(TreeInterface::class);
-        $this->directory->tree->shouldReceive("getFiles")->with()->andReturn(["passthru"]);
+        $this->directory->tree->shouldReceive("getFiles")->with()->andReturn([$passthru]);
 
         $result = $this->directory->getFiles();
-        $this->assertSame(["passthru"], $result);
+        $this->assertSame([$passthru], $result);
     }
 
 

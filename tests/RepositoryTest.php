@@ -12,20 +12,17 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use function is_array;
 use function iterator_to_array;
 use function json_decode;
 use function json_encode;
 
 class RepositoryTest extends TestCase
 {
-    /**
-     * @var RepositoryInterface The instance we are testing.
-     */
+    /** @var RepositoryInterface */
     private $repository;
 
-    /**
-     * @var ApiInterface|MockInterface A mocked API instance to test with.
-     */
+    /** @var ApiInterface|MockInterface */
     private $api;
 
 
@@ -200,7 +197,7 @@ class RepositoryTest extends TestCase
             ->andReturn($response);
 
         $branches = $this->repository->getBranches();
-        $branches = iterator_to_array($branches);
+        $branches = is_array($branches) ? $branches : iterator_to_array($branches);
 
         $this->assertContainsOnlyInstancesOf(BranchInterface::class, $branches);
 
@@ -276,7 +273,7 @@ class RepositoryTest extends TestCase
             ->andReturn($response);
 
         $tags = $this->repository->getTags();
-        $tags = iterator_to_array($tags);
+        $tags = is_array($tags) ? $tags : iterator_to_array($tags);
 
         $this->assertContainsOnlyInstancesOf(TagInterface::class, $tags);
 

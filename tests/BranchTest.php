@@ -19,7 +19,7 @@ use function json_encode;
 
 class BranchTest extends TestCase
 {
-    /** @var BranchInterface */
+    /** @var BranchInterface|Intruder */
     private $branch;
 
     /** @var ApiInterface|MockInterface */
@@ -162,11 +162,12 @@ class BranchTest extends TestCase
 
     public function testGetDirectories()
     {
+        $passthru = Mockery::mock(DirectoryInterface::class);
         $this->branch->tree = Mockery::mock(TreeInterface::class);
-        $this->branch->tree->shouldReceive("getDirectories")->with()->andReturn(["passthru"]);
+        $this->branch->tree->shouldReceive("getDirectories")->with()->andReturn([$passthru]);
 
         $result = $this->branch->getDirectories();
-        $this->assertSame(["passthru"], $result);
+        $this->assertSame([$passthru], $result);
     }
 
 
@@ -202,11 +203,12 @@ class BranchTest extends TestCase
 
     public function testGetFiles()
     {
+        $passthru = Mockery::mock(FileInterface::class);
         $this->branch->tree = Mockery::mock(TreeInterface::class);
-        $this->branch->tree->shouldReceive("getFiles")->with()->andReturn(["passthru"]);
+        $this->branch->tree->shouldReceive("getFiles")->with()->andReturn([$passthru]);
 
         $result = $this->branch->getFiles();
-        $this->assertSame(["passthru"], $result);
+        $this->assertSame([$passthru], $result);
     }
 
 

@@ -7,7 +7,7 @@ interface TreeInterface
     /**
      * Get the subdirectories in this directory.
      *
-     * @return iterable|DirectoryInterface[]
+     * @return iterable&DirectoryInterface[]
      */
     public function getDirectories(): iterable;
 
@@ -32,7 +32,7 @@ interface TreeInterface
     /**
      * Get the files in this directory.
      *
-     * @return iterable|FileInterface[]
+     * @return iterable&FileInterface[]
      */
     public function getFiles(): iterable;
 

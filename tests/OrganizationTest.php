@@ -12,10 +12,11 @@ use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
+use function is_array;
 
 class OrganizationTest extends TestCase
 {
-    /** @var Organization */
+    /** @var Organization|Intruder */
     private $organization;
 
     /** @var ApiInterface|MockInterface */
@@ -301,7 +302,7 @@ class OrganizationTest extends TestCase
             ->andReturn($response);
 
         $repositories = $this->organization->getRepositories();
-        $repositories = iterator_to_array($repositories);
+        $repositories = is_array($repositories) ? $repositories : iterator_to_array($repositories);
 
         $this->assertContainsOnlyInstancesOf(RepositoryInterface::class, $repositories);
 

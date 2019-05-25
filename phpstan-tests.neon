@@ -4,17 +4,8 @@ includes:
 
 parameters:
   ignoreErrors:
-    - '/Parameter #1 \$it of function iterator_to_array expects Traversable, iterable.* given/'
-    - '/Property .* does not accept duncan3dc\\ObjectIntruder\\Intruder/'
-    - '/Call to method PHPUnit\\Framework\\Assert::assertSame\(\) with array(.*) and iterable.* will always evaluate to false/'
+    - '/Access to an undefined property .*duncan3dc\\ObjectIntruder\\Intruder::/'
+    - '/Call to an undefined method .*duncan3dc\\ObjectIntruder\\Intruder::/'
 
-    - '/Call to private method getToken\(\) of class duncan3dc\\GitHub\\Organization/'
-    - '/Access to private property duncan3dc\\GitHub\\Organization::\$(token|cache)/'
-    - '/Access to an undefined property duncan3dc\\GitHub\\DirectoryInterface::\$tree/'
-    - '/Access to an undefined property duncan3dc\\GitHub\\BranchInterface::\$tree/'
-    - '/Call to an undefined method duncan3dc\\GitHub\\BranchInterface::getUrl\(\)/'
-    - '/Call to an undefined method duncan3dc\\GitHub\\BranchInterface::getTree\(\)/'
-    - '/Call to an undefined method duncan3dc\\GitHub\\DirectoryInterface::getTree\(\)/'
-
-    - '/Property duncan3dc\\GitHubTests\\HttpTraitTest::\$http has invalid type/'
-    - '/Property duncan3dc\\GitHubTests\\HttpTraitTest::\$http .* does not accept class@anonymous/'
+    - '/^Property duncan3dc\\GitHubTests\\HttpTraitTest::\$http has invalid type duncan3dc\\GitHub\\HttpTrait\.$/'
+    - '/^Property duncan3dc\\GitHubTests\\HttpTraitTest::\$http .* does not accept class@anonymous.*\.$/'

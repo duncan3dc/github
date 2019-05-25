@@ -56,7 +56,7 @@ interface RepositoryInterface extends ApiInterface
     /**
      * Get all the branches in this repository.
      *
-     * @return iterable|BranchInterface[]
+     * @return iterable&BranchInterface[]
      */
     public function getBranches(): iterable;
 
@@ -88,7 +88,7 @@ interface RepositoryInterface extends ApiInterface
     /**
      * Get all the tags in this repository.
      *
-     * @return iterable|TagInterface[]
+     * @return iterable&TagInterface[]
      */
     public function getTags(): iterable;
 }

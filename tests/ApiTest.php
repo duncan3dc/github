@@ -20,14 +20,10 @@ use function openssl_pkey_new;
 
 class ApiTest extends TestCase
 {
-    /**
-     * @var Api The instance we are testing
-     */
+    /** @var Api|Intruder */
     private $api;
 
-    /**
-     * @var ClientInterface|MockInterface
-     */
+    /** @var ClientInterface|MockInterface */
     private $client;
 
     public function setUp()

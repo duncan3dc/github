@@ -21,14 +21,14 @@ interface PullRequestInterface extends ApiInterface
     /**
      * Get all the files that are touched by this pr.
      *
-     * @return iterable|\stdClass[]
+     * @return iterable&\stdClass[]
      */
     public function getFiles(): iterable;
 
     /**
      * Get all the comments on this pr.
      *
-     * @return iterable|\stdClass[]
+     * @return iterable&\stdClass[]
      */
     public function getComments(): iterable;
 

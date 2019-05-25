@@ -11,6 +11,8 @@ use duncan3dc\GitHub\TreeInterface;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use function is_array;
+use function iterator_to_array;
 use function json_decode;
 use function json_encode;
 
@@ -81,7 +83,7 @@ class TreeTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Unable to retrieve all directories, too many files in the repository");
         $result = $this->tree->getDirectories();
-        iterator_to_array($result);
+        is_array($result) ? $result : iterator_to_array($result);
     }
 
 
@@ -142,7 +144,7 @@ class TreeTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Unable to retrieve all files, there are too many in the repository");
         $result = $this->tree->getFiles();
-        iterator_to_array($result);
+        is_array($result) ? $result : iterator_to_array($result);
     }
 
 

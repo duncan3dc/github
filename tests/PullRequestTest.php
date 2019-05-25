@@ -10,6 +10,7 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use function is_array;
 use function iterator_to_array;
 
 class PullRequestTest extends TestCase
@@ -92,7 +93,7 @@ class PullRequestTest extends TestCase
         $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27/files", [])->andReturn($response);
 
         $files = $this->pull->getFiles();
-        $files = iterator_to_array($files);
+        $files = is_array($files) ? $files : iterator_to_array($files);
 
         $this->assertSame(["file"], $files);
     }
@@ -108,7 +109,7 @@ class PullRequestTest extends TestCase
         $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27/comments", [])->andReturn($response);
 
         $comments = $this->pull->getComments();
-        $comments = iterator_to_array($comments);
+        $comments = is_array($comments) ? $comments : iterator_to_array($comments);
 
         $this->assertSame(["comment"], $comments);
     }
