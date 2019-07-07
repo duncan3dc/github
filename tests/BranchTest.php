@@ -26,7 +26,7 @@ class BranchTest extends TestCase
     private $api;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -57,13 +57,13 @@ class BranchTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testFromListResponse()
+    public function testFromListResponse(): void
     {
         $branch = Branch::fromListResponse(new \stdClass(), "", $this->api);
 
@@ -73,7 +73,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function urlProvider()
+    public function urlProvider(): iterable
     {
         $data = [
             "" => "https://api.github.com/repos/duncan3dc/test/branches/master",
@@ -90,42 +90,42 @@ class BranchTest extends TestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testGetUrl($input, $expected)
+    public function testGetUrl(string $input, string $expected): void
     {
         $result = $this->branch->getUrl($input);
         $this->assertSame($expected, $result);
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $result = $this->branch->getName();
         $this->assertSame("master", $result);
     }
 
 
-    public function testGetCommit()
+    public function testGetCommit(): void
     {
         $result = $this->branch->getCommit();
         $this->assertSame("e2bd25ff3191f7ec9f353c137a114d599ac7959f", $result);
     }
 
 
-    public function testGetHead()
+    public function testGetHead(): void
     {
         $result = $this->branch->getHead()->message;
         $this->assertSame("Example commit message", $result);
     }
 
 
-    public function testGetDate()
+    public function testGetDate(): void
     {
         $date = $this->branch->getDate();
         $this->assertSame(1490788835, $date);
     }
 
 
-    public function testGetProtection1()
+    public function testGetProtection1(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -139,7 +139,7 @@ class BranchTest extends TestCase
         $result = $this->branch->getProtection();
         $this->assertSame(["settings" => "protected"], (array) $result);
     }
-    public function testGetProtection2()
+    public function testGetProtection2(): void
     {
         $data = (object) [
             "protected" => 0,
@@ -151,7 +151,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testGetTree()
+    public function testGetTree(): void
     {
         $this->api->shouldReceive("get")->with("http://branch/tree")->andReturn(new \stdClass());
 
@@ -160,7 +160,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testGetDirectories()
+    public function testGetDirectories(): void
     {
         $passthru = Mockery::mock(DirectoryInterface::class);
         $this->branch->tree = Mockery::mock(TreeInterface::class);
@@ -171,7 +171,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testGetDirectory()
+    public function testGetDirectory(): void
     {
         $directory = Mockery::mock(DirectoryInterface::class);
 
@@ -183,7 +183,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testHasDirectory1()
+    public function testHasDirectory1(): void
     {
         $this->branch->tree = Mockery::mock(TreeInterface::class);
         $this->branch->tree->shouldReceive("hasDirectory")->with("stuff")->andReturn(true);
@@ -191,7 +191,7 @@ class BranchTest extends TestCase
         $result = $this->branch->hasDirectory("stuff");
         $this->assertSame(true, $result);
     }
-    public function testHasDirectory2()
+    public function testHasDirectory2(): void
     {
         $this->branch->tree = Mockery::mock(TreeInterface::class);
         $this->branch->tree->shouldReceive("hasDirectory")->with("stuff")->andReturn(false);
@@ -201,7 +201,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         $passthru = Mockery::mock(FileInterface::class);
         $this->branch->tree = Mockery::mock(TreeInterface::class);
@@ -212,7 +212,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testGetFile()
+    public function testGetFile(): void
     {
         $file = Mockery::mock(FileInterface::class);
 
@@ -224,7 +224,7 @@ class BranchTest extends TestCase
     }
 
 
-    public function testHasFile1()
+    public function testHasFile1(): void
     {
         $this->branch->tree = Mockery::mock(TreeInterface::class);
         $this->branch->tree->shouldReceive("hasFile")->with("thing")->andReturn(true);
@@ -232,7 +232,7 @@ class BranchTest extends TestCase
         $result = $this->branch->hasFile("thing");
         $this->assertSame(true, $result);
     }
-    public function testHasFile2()
+    public function testHasFile2(): void
     {
         $this->branch->tree = Mockery::mock(TreeInterface::class);
         $this->branch->tree->shouldReceive("hasFile")->with("thing")->andReturn(false);

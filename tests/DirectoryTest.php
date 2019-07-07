@@ -22,7 +22,7 @@ class DirectoryTest extends TestCase
     private $api;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -38,20 +38,20 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $result = $this->directory->getName();
         $this->assertSame("stuff", $result);
     }
 
 
-    public function testGetTree()
+    public function testGetTree(): void
     {
         $this->api->shouldReceive("get")->with("http://directory/tree")->andReturn(new \stdClass());
 
@@ -60,7 +60,7 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function testGetDirectories()
+    public function testGetDirectories(): void
     {
         $passthru = Mockery::mock(DirectoryInterface::class);
         $this->directory->tree = Mockery::mock(TreeInterface::class);
@@ -71,7 +71,7 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function testGetDirectory()
+    public function testGetDirectory(): void
     {
         $directory = Mockery::mock(DirectoryInterface::class);
 
@@ -83,7 +83,7 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function testHasDirectory1()
+    public function testHasDirectory1(): void
     {
         $this->directory->tree = Mockery::mock(TreeInterface::class);
         $this->directory->tree->shouldReceive("hasDirectory")->with("thing")->andReturn(true);
@@ -91,7 +91,7 @@ class DirectoryTest extends TestCase
         $result = $this->directory->hasDirectory("thing");
         $this->assertSame(true, $result);
     }
-    public function testHasDirectory2()
+    public function testHasDirectory2(): void
     {
         $this->directory->tree = Mockery::mock(TreeInterface::class);
         $this->directory->tree->shouldReceive("hasDirectory")->with("thing")->andReturn(false);
@@ -101,7 +101,7 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         $passthru = Mockery::mock(FileInterface::class);
         $this->directory->tree = Mockery::mock(TreeInterface::class);
@@ -112,7 +112,7 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function testGetFile()
+    public function testGetFile(): void
     {
         $file = Mockery::mock(FileInterface::class);
 
@@ -124,7 +124,7 @@ class DirectoryTest extends TestCase
     }
 
 
-    public function testHasFile1()
+    public function testHasFile1(): void
     {
         $this->directory->tree = Mockery::mock(TreeInterface::class);
         $this->directory->tree->shouldReceive("hasFile")->with("thing")->andReturn(true);
@@ -132,7 +132,7 @@ class DirectoryTest extends TestCase
         $result = $this->directory->hasFile("thing");
         $this->assertSame(true, $result);
     }
-    public function testHasFile2()
+    public function testHasFile2(): void
     {
         $this->directory->tree = Mockery::mock(TreeInterface::class);
         $this->directory->tree->shouldReceive("hasFile")->with("thing")->andReturn(false);

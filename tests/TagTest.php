@@ -13,7 +13,7 @@ class TagTest extends TestCase
     private $tag;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $data = (object) [
             "name" => "1.5.0",
@@ -26,20 +26,20 @@ class TagTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $result = $this->tag->getName();
         $this->assertSame("1.5.0", $result);
     }
 
 
-    public function testGetCommit()
+    public function testGetCommit(): void
     {
         $result = $this->tag->getCommit();
         $this->assertSame("2b584206c2d0e245286c41ee8c77a8e101c87a44", $result);

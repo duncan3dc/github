@@ -28,7 +28,7 @@ class TreeTest extends TestCase
     private $data;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -59,13 +59,13 @@ class TreeTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetDirectories1()
+    public function testGetDirectories1(): void
     {
         $result = $this->tree->getDirectories();
 
@@ -76,7 +76,7 @@ class TreeTest extends TestCase
 
         $this->assertSame(["stuff", "more-stuff"], $directories);
     }
-    public function testGetDirectoriess2()
+    public function testGetDirectoriess2(): void
     {
         $this->data->truncated = true;
 
@@ -87,18 +87,18 @@ class TreeTest extends TestCase
     }
 
 
-    public function testGetDirectory1()
+    public function testGetDirectory1(): void
     {
         $directory = $this->tree->getDirectory("stuff");
         $this->assertSame("stuff", $directory->getName());
     }
-    public function testGetDirectory2()
+    public function testGetDirectory2(): void
     {
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("The requested directory does not exist: no-stuff");
         $this->tree->getDirectory("no-stuff");
     }
-    public function testGetDirectory3()
+    public function testGetDirectory3(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Unable to find the requested directory, too many files in the repository");
@@ -107,17 +107,17 @@ class TreeTest extends TestCase
     }
 
 
-    public function testHasDirectory1()
+    public function testHasDirectory1(): void
     {
         $result = $this->tree->hasDirectory("stuff");
         $this->assertTrue($result);
     }
-    public function testHasDirectory2()
+    public function testHasDirectory2(): void
     {
         $result = $this->tree->hasDirectory("no-stuff");
         $this->assertFalse($result);
     }
-    public function testHasDirectory3()
+    public function testHasDirectory3(): void
     {
         $this->expectException(TruncatedResponseException::class);
         $this->expectExceptionMessage("Unable to find the requested directory, too many files in the repository");
@@ -126,7 +126,7 @@ class TreeTest extends TestCase
     }
 
 
-    public function testGetFiles1()
+    public function testGetFiles1(): void
     {
         $result = $this->tree->getFiles();
 
@@ -137,7 +137,7 @@ class TreeTest extends TestCase
 
         $this->assertSame(["file1.txt", "file3.txt"], $files);
     }
-    public function testGetFiles2()
+    public function testGetFiles2(): void
     {
         $this->data->truncated = true;
 
@@ -148,12 +148,12 @@ class TreeTest extends TestCase
     }
 
 
-    public function testGetFile1()
+    public function testGetFile1(): void
     {
         $file = $this->tree->getFile("file1.txt");
         $this->assertSame("file1.txt", $file->getName());
     }
-    public function testGetFile2()
+    public function testGetFile2(): void
     {
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("The requested file does not exist: file77.txt");
@@ -168,17 +168,17 @@ class TreeTest extends TestCase
     }
 
 
-    public function testHasFile1()
+    public function testHasFile1(): void
     {
         $result = $this->tree->hasFile("file1.txt");
         $this->assertTrue($result);
     }
-    public function testHasFile2()
+    public function testHasFile2(): void
     {
         $result = $this->tree->hasFile("file77.txt");
         $this->assertFalse($result);
     }
-    public function testHasFile3()
+    public function testHasFile3(): void
     {
         $this->expectException(TruncatedResponseException::class);
         $this->expectExceptionMessage("Unable to find the requested file, there are too many in the repository");

@@ -26,7 +26,7 @@ class RepositoryTest extends TestCase
     private $api;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -40,34 +40,34 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $result = $this->repository->getName();
         $this->assertSame("octocat", $result);
     }
 
 
-    public function testGetFullName()
+    public function testGetFullName(): void
     {
         $result = $this->repository->getFullName();
         $this->assertSame("github/octocat", $result);
     }
 
 
-    public function testGetDescription()
+    public function testGetDescription(): void
     {
         $result = $this->repository->getDescription();
         $this->assertSame("Blah blah", $result);
     }
 
 
-    public function testIsPrivate1()
+    public function testIsPrivate1(): void
     {
         $data = (object) [
             "private" => true,
@@ -75,7 +75,7 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isPrivate());
     }
-    public function testIsPrivate2()
+    public function testIsPrivate2(): void
     {
         $data = (object) [
             "private" => false,
@@ -83,19 +83,19 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertFalse($repository->isPrivate());
     }
-    public function testIsPrivate3()
+    public function testIsPrivate3(): void
     {
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertFalse($repository->isPrivate());
     }
 
 
-    public function testIsPublic1()
+    public function testIsPublic1(): void
     {
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertTrue($repository->isPublic());
     }
-    public function testIsPublic2()
+    public function testIsPublic2(): void
     {
         $data = (object) [
             "private" => false,
@@ -103,7 +103,7 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isPublic());
     }
-    public function testIsPublic3()
+    public function testIsPublic3(): void
     {
         $data = (object) [
             "private" => true,
@@ -113,12 +113,12 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function testIsFork1()
+    public function testIsFork1(): void
     {
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertFalse($repository->isFork());
     }
-    public function testIsFork2()
+    public function testIsFork2(): void
     {
         $data = (object) [
             "fork" => true,
@@ -126,7 +126,7 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isFork());
     }
-    public function testIsFork3()
+    public function testIsFork3(): void
     {
         $data = (object) [
             "fork" => false,
@@ -159,7 +159,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function urlProvider()
+    public function urlProvider(): iterable
     {
         $data = [
             "test" => "repos/github/octocat/test",
@@ -175,7 +175,7 @@ class RepositoryTest extends TestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testRequest($input, $expected)
+    public function testRequest(string $input, string $expected): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -187,7 +187,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function testGetBranches()
+    public function testGetBranches(): void
     {
         $response = Helper::getResponse("branches");
 
@@ -206,7 +206,7 @@ class RepositoryTest extends TestCase
         # Ensure this information is available without another API request
         $this->assertSame("master", $branch->getName());
         $this->assertSame("6dcb09b5b57875f334f61aebed695e2e4193db5e", $branch->getCommit());
-        $this->assertInternalType("object", $branch->getProtection());
+        $this->assertIsObject($branch->getProtection());
 
         # Ensure other information can be lazily loaded
         $data = [
@@ -226,7 +226,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function testGetBranch()
+    public function testGetBranch(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -240,7 +240,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function testGetDefaultBranch()
+    public function testGetDefaultBranch(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -254,7 +254,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function testGetPullRequest()
+    public function testGetPullRequest(): void
     {
         $result = $this->repository->getPullRequest(48);
 
@@ -263,7 +263,7 @@ class RepositoryTest extends TestCase
     }
 
 
-    public function testGetTags()
+    public function testGetTags(): void
     {
         $response = Helper::getResponse("tags");
 

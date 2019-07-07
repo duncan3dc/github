@@ -19,7 +19,7 @@ class HttpTraitTest extends TestCase
     private $http;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -43,7 +43,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -62,7 +62,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function testPost1()
+    public function testPost1(): void
     {
         $this->setupResponse("POST", '{"result":"yep"}');
 
@@ -70,7 +70,7 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
-    public function testPost2()
+    public function testPost2(): void
     {
         $this->setupResponse("POST", '{"WHAT_IS_THIS}');
 
@@ -79,7 +79,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function testPut1()
+    public function testPut1(): void
     {
         $this->setupResponse("PUT", '{"result":"yep"}');
 
@@ -87,7 +87,7 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
-    public function testPut2()
+    public function testPut2(): void
     {
         $this->setupResponse("PUT", '{"WHAT_IS_THIS}');
 
@@ -96,7 +96,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function testPatch1()
+    public function testPatch1(): void
     {
         $this->setupResponse("PATCH", '{"result":"yep"}');
 
@@ -104,7 +104,7 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
-    public function testPatch2()
+    public function testPatch2(): void
     {
         $this->setupResponse("PATCH", '{"WHAT_IS_THIS}');
 
@@ -113,7 +113,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function testDelete1()
+    public function testDelete1(): void
     {
         $this->setupResponse("DELETE", '{"result":"yep"}');
 
@@ -121,7 +121,7 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
-    public function testDelete2()
+    public function testDelete2(): void
     {
         $this->setupResponse("DELETE", '{"WHAT_IS_THIS}');
 
@@ -130,7 +130,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function testGet1()
+    public function testGet1(): void
     {
         $this->setupResponse("GET", '{"result":"yep"}');
 
@@ -138,7 +138,7 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
-    public function testGet2()
+    public function testGet2(): void
     {
         $this->setupResponse("GET", '{"WHAT_IS_THIS}');
 
@@ -147,7 +147,7 @@ class HttpTraitTest extends TestCase
     }
 
 
-    public function testEmptyResponse()
+    public function testEmptyResponse(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(204);

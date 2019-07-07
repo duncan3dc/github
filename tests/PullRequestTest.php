@@ -25,7 +25,7 @@ class PullRequestTest extends TestCase
     private $repository;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -36,13 +36,13 @@ class PullRequestTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function urlProvider()
+    public function urlProvider(): iterable
     {
         $data = [
             ""                  =>  "repos/github/octocat/pulls/27",
@@ -59,7 +59,7 @@ class PullRequestTest extends TestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testGetUrl($input, $expected)
+    public function testGetUrl(string $input, string $expected): void
     {
         $response = Mockery::mock(ResponseInterface::class);
 
@@ -70,20 +70,20 @@ class PullRequestTest extends TestCase
     }
 
 
-    public function testGetNumber()
+    public function testGetNumber(): void
     {
         $this->assertSame(27, $this->pull->getNumber());
     }
 
 
-    public function testGetRepository()
+    public function testGetRepository(): void
     {
         $repository = $this->pull->getRepository();
         $this->assertSame($this->repository, $repository);
     }
 
 
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -99,7 +99,7 @@ class PullRequestTest extends TestCase
     }
 
 
-    public function testGetComments()
+    public function testGetComments(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -115,7 +115,7 @@ class PullRequestTest extends TestCase
     }
 
 
-    public function testWithCommit()
+    public function testWithCommit(): void
     {
         $pull = $this->pull->withCommit("abc123");
         $this->assertNotSame($pull, $this->pull);
@@ -123,7 +123,7 @@ class PullRequestTest extends TestCase
     }
 
 
-    public function testGetCommit()
+    public function testGetCommit(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -135,7 +135,7 @@ class PullRequestTest extends TestCase
     }
 
 
-    public function testAddComment()
+    public function testAddComment(): void
     {
         $pull = $this->pull->withCommit("abc123");
 

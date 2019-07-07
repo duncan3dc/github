@@ -26,7 +26,7 @@ class OrganizationTest extends TestCase
     private $client;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
         $this->client = Mockery::mock(ClientInterface::class);
@@ -43,20 +43,20 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $result = $this->organization->getName();
         $this->assertSame("thephpleague", $result);
     }
 
 
-    private function mockToken()
+    private function mockToken(): array
     {
         $this->organization->token = "XYZ789";
         $this->organization->tokenExpires = time() + 60;
@@ -69,7 +69,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testGetToken1()
+    public function testGetToken1(): void
     {
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
             "token" => "ABC123",
@@ -81,7 +81,7 @@ class OrganizationTest extends TestCase
         $this->assertSame("ABC123", $this->organization->token);
         $this->assertSame(1490788835, $this->organization->tokenExpires);
     }
-    public function testGetToken2()
+    public function testGetToken2(): void
     {
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
             "token" => "ABC123",
@@ -95,7 +95,7 @@ class OrganizationTest extends TestCase
         # Ensure that calling `getToken()` again before the token expires doesn't hit the mock client
         $this->organization->getToken();
     }
-    public function testGetToken3()
+    public function testGetToken3(): void
     {
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
             "token" => "ABC123",
@@ -186,7 +186,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function urlProvider()
+    public function urlProvider(): iterable
     {
         $data = [
             "test"              =>  "https://api.github.com/test",
@@ -202,7 +202,7 @@ class OrganizationTest extends TestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testRequest($input, $expected)
+    public function testRequest(string $input, string $expected): void
     {
         $params = $this->mockToken();
 
@@ -214,7 +214,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testRequestWithEmptyGetData()
+    public function testRequestWithEmptyGetData(): void
     {
         $params = $this->mockToken();
         $response = Mockery::mock(ResponseInterface::class);
@@ -227,7 +227,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testRequestWithGetData()
+    public function testRequestWithGetData(): void
     {
         $params = $this->mockToken();
         $response = Mockery::mock(ResponseInterface::class);
@@ -242,7 +242,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testRequestWithEmptyPostData()
+    public function testRequestWithEmptyPostData(): void
     {
         $params = $this->mockToken();
         $response = Mockery::mock(ResponseInterface::class);
@@ -255,7 +255,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testRequestWithPostData()
+    public function testRequestWithPostData(): void
     {
         $params = $this->mockToken();
         $response = Mockery::mock(ResponseInterface::class);
@@ -270,7 +270,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testGetRepository()
+    public function testGetRepository(): void
     {
         $params = $this->mockToken();
 
@@ -290,7 +290,7 @@ class OrganizationTest extends TestCase
     }
 
 
-    public function testGetRepositories()
+    public function testGetRepositories(): void
     {
         $params = $this->mockToken();
 

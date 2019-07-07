@@ -26,7 +26,7 @@ class ApiTest extends TestCase
     /** @var ClientInterface|MockInterface */
     private $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         # Generate a valid private key for testing
         $ssl = openssl_pkey_new();
@@ -39,13 +39,13 @@ class ApiTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $ssl = openssl_pkey_new();
         assert(is_resource($ssl));
@@ -58,7 +58,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testPost()
+    public function testPost(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -75,7 +75,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testGet()
+    public function testGet(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -92,7 +92,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $response = Helper::getResponse("get_all_page1");
         $this->client->shouldReceive("request")->once()->with("GET", "https://api.github.com/pages", Mockery::on(function (array $params) {
@@ -119,7 +119,7 @@ class ApiTest extends TestCase
             ["id" => 54634039, "name" => "sql-mock"],
         ], $data);
     }
-    public function testGetAll2()
+    public function testGetAll2(): void
     {
         $response = Helper::getResponse("get_all");
         $this->client->shouldReceive("request")->once()->with("GET", "https://api.github.com/pages", Mockery::on(function (array $params) {
@@ -137,7 +137,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testPut()
+    public function testPut(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -154,7 +154,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -171,7 +171,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
@@ -188,7 +188,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testGetOrganizations()
+    public function testGetOrganizations(): void
     {
         $response = Helper::getResponse("organizations");
 
@@ -207,7 +207,7 @@ class ApiTest extends TestCase
     }
 
 
-    public function testGetOrganization1()
+    public function testGetOrganization1(): void
     {
         $response = Helper::getResponse("organizations");
 
@@ -221,7 +221,7 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(OrganizationInterface::class, $organization);
         $this->assertSame("duncan3dc", $organization->getName());
     }
-    public function testGetOrganization2()
+    public function testGetOrganization2(): void
     {
         $response = Helper::getResponse("organizations");
 

@@ -19,7 +19,7 @@ class FileTest extends TestCase
     private $api;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
@@ -36,48 +36,48 @@ class FileTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $result = $this->file->getName();
         $this->assertSame("README.md", $result);
     }
 
 
-    public function testGetSize()
+    public function testGetSize(): void
     {
         $result = $this->file->getSize();
         $this->assertSame(30, $result);
     }
 
 
-    public function testGetMode()
+    public function testGetMode(): void
     {
         $result = $this->file->getMode();
         $this->assertSame("100644", $result);
     }
 
 
-    public function testGetHash()
+    public function testGetHash(): void
     {
         $result = $this->file->getHash();
         $this->assertSame("44b4fc6d56897b048c772eb4087f854f46256132", $result);
     }
 
 
-    public function testGetContents1()
+    public function testGetContents1(): void
     {
         $this->api->shouldReceive("get")->once()->with("http://test.com/")->andReturn((object) ["content" => "aGVsbG8gd29ybGQK"]);
 
         $contents = $this->file->getContents();
         $this->assertSame("hello world\n", $contents);
     }
-    public function testGetContents2()
+    public function testGetContents2(): void
     {
         $this->api->shouldReceive("get")->once()->with("http://test.com/")->andReturn((object) ["content" => "aGVsbG8gd29ybGQK"]);
 
@@ -88,7 +88,7 @@ class FileTest extends TestCase
         $contents = $this->file->getContents();
         $this->assertSame("hello world\n", $contents);
     }
-    public function testGetContents3()
+    public function testGetContents3(): void
     {
         $this->api->shouldReceive("get")->once()->with("http://test.com/")->andReturn((object) ["content" => "@"]);
 
