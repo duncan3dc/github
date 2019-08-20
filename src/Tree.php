@@ -4,6 +4,10 @@ namespace duncan3dc\GitHub;
 
 use duncan3dc\GitHub\Exceptions\NotFoundException;
 use duncan3dc\GitHub\Exceptions\TruncatedResponseException;
+use function array_pop;
+use function explode;
+use function strpos;
+use function trim;
 
 final class Tree implements TreeInterface
 {
@@ -153,8 +157,22 @@ final class Tree implements TreeInterface
      */
     public function hasFile(string $name): bool
     {
+        $tree = $this;
+
+        $name = trim($name, "/");
+        if (strpos($name, "/") !== false) {
+            $directories = explode("/", $name);
+            $name = array_pop($directories);
+            foreach ($directories as $directory) {
+                if (!$tree->hasDirectory($directory)) {
+                    return false;
+                }
+                $tree = $tree->getDirectory($directory);
+            }
+        }
+
         try {
-            $this->getFile($name);
+            $tree->getFile($name);
         } catch (NotFoundException $e) {
             return false;
         }
