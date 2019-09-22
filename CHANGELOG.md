@@ -4,6 +4,26 @@
 
 --------
 
+## 0.3.0 - 2019-09-22
+
+### Added
+
+* [Repository] Added an isArchived() method.
+* [Api] Added support for PATCH requests.
+* [Api] Cache tokens for improved performance.
+* [Api] Allow responses to be cached by passing a PSR compatible cache to the Api constructor.
+
+### Changed
+
+* [Support] Added support for PHP 7.3.
+* [Support] Dropped support for PHP 7.1.
+
+### Fixed
+
+* [Http] Correctly handle responses with empty bodies.
+
+--------
+
 ## 0.2.0 - 2018-11-27
 
 ### Added
