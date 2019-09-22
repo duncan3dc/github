@@ -5,6 +5,7 @@ namespace duncan3dc\GitHubTests;
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\Organization;
 use duncan3dc\GitHub\RepositoryInterface;
+use duncan3dc\GitHub\TokenProviderInterface;
 use duncan3dc\ObjectIntruder\Intruder;
 use GuzzleHttp\ClientInterface;
 use Mockery;
@@ -32,14 +33,14 @@ class OrganizationTest extends TestCase
         $this->api = Mockery::mock(ApiInterface::class);
         $this->client = Mockery::mock(ClientInterface::class);
 
-        $data = (object) [
+        $this->data = (object) [
             "id" => 789,
             "account" => (object) [
                 "login" => "thephpleague",
             ],
             "access_tokens_url" => "https://api.github.com/GIVE_ME_TOKEN",
         ];
-        $organization = Organization::fromApiResponse($data, $this->api, $this->client);
+        $organization = Organization::fromApiResponse($this->data, $this->client);
         $this->organization = new Intruder($organization);
     }
 
@@ -59,12 +60,18 @@ class OrganizationTest extends TestCase
 
     private function mockToken(): array
     {
-        $this->organization->token = "XYZ789";
-        $this->organization->tokenExpires = time() + 60;
+        $token = new class implements TokenProviderInterface {
+            public function getToken(): string
+            {
+                return "XYZ789";
+            }
+        };
+        $organization = Organization::fromApiResponse($this->data, $this->client, null, $token);
+        $this->organization = new Intruder($organization);
 
         return [
             "headers"   =>  [
-                "Authorization" =>  "token {$this->organization->token}",
+                "Authorization" =>  "token " . $token->getToken(),
             ],
         ];
     }

@@ -26,4 +26,11 @@ interface OrganizationInterface extends ApiInterface
      * @return RepositoryInterface
      */
     public function getRepository(string $name): RepositoryInterface;
+
+    /**
+     * Get the access token endpoint for this organization.
+     *
+     * @return string
+     */
+    public function getAccessTokensUrl(): string;
 }

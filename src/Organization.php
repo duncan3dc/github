@@ -26,11 +26,6 @@ final class Organization implements OrganizationInterface
     private $data;
 
     /**
-     * @var ApiInterface The GitHub app this installation is for.
-     */
-    private $api;
-
-    /**
      * @var ClientInterface The HTTP client to communicate via.
      */
     private $client;
@@ -38,59 +33,58 @@ final class Organization implements OrganizationInterface
     /** @var CacheInterface|null */
     private $cache;
 
-    /**
-     * @var string The current installation access token.
-     */
-    private $token = "";
-
-    /**
-     * @var int $tokenExpires When the current installation access token expires.
-     */
-    private $tokenExpires = 0;
+    /** @var TokenProviderInterface */
+    private $token;
 
 
     /**
      * @param string $name The name of the organization or user
-     * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
      * @param CacheInterface $cache
+     * @param TokenProviderInterface $token
      *
      * @return OrganizationInterface
      */
-    public static function fromName(string $name, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null): OrganizationInterface
+    public static function fromName(string $name, ClientInterface $client, CacheInterface $cache = null, TokenProviderInterface $token = null): OrganizationInterface
     {
-        $data = $api->get("orgs/{$name}");
+        $org = new self(new \stdClass(), $client, $cache, $token);
 
-        return new self($data, $api, $client, $cache);
+        $data = $org->get("/orgs/{$name}");
+
+        return new self($data, $client, $cache, $token);
     }
 
 
     /**
      * @var \stdClass $data This organization's data returned from the API
-     * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
      * @param CacheInterface $cache
+     * @param TokenProviderInterface $token
      *
      * @return OrganizationInterface
      */
-    public static function fromApiResponse(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null): OrganizationInterface
+    public static function fromApiResponse(\stdClass $data, ClientInterface $client, CacheInterface $cache = null, TokenProviderInterface $token = null): OrganizationInterface
     {
-        return new self($data, $api, $client, $cache);
+        return new self($data, $client, $cache, $token);
     }
 
 
     /**
      * @var \stdClass $data This organization's data returned from the API
-     * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
      * @param CacheInterface $cache
+     * @param TokenProviderInterface $token
      */
-    private function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null)
+    private function __construct(\stdClass $data, ClientInterface $client, CacheInterface $cache = null, TokenProviderInterface $token = null)
     {
         $this->data = $data;
-        $this->api = $api;
         $this->client = $client;
         $this->cache = $cache;
+
+        if ($token === null) {
+            $token = new TokenProvider($this, $this->cache);
+        }
+        $this->token = $token;
     }
 
 
@@ -107,7 +101,7 @@ final class Organization implements OrganizationInterface
     {
         $params = [
             "headers" => [
-                "Authorization" => "token " . $this->getToken(),
+                "Authorization" => "token " . $this->token->getToken(),
             ],
         ];
 
@@ -170,37 +164,6 @@ final class Organization implements OrganizationInterface
 
 
     /**
-     * Get the installation access token.
-     *
-     * @return string
-     */
-    private function getToken(): string
-    {
-        if ($this->token === "" && $this->cache) {
-            $this->token = $this->cache->get("github-token-" . $this->getName(), "");
-            $this->tokenExpires = $this->cache->get("github-token-expires-" . $this->getName(), 0);
-        }
-
-        # If we already have a token, and it's not expired yet then use it
-        if ($this->token !== "" && $this->tokenExpires > time()) {
-            return $this->token;
-        }
-
-        $data = $this->api->post($this->data->access_tokens_url);
-
-        $this->token = $data->token;
-        $this->tokenExpires = strtotime($data->expires_at);
-
-        if ($this->cache) {
-            $this->cache->set("github-token-" . $this->getName(), $this->token);
-            $this->cache->set("github-token-expires-" . $this->getName(), $this->tokenExpires);
-        }
-
-        return $data->token;
-    }
-
-
-    /**
      * Get all of the repositories for this installation.
      *
      * @return RepositoryInterface[]
@@ -229,5 +192,14 @@ final class Organization implements OrganizationInterface
     public function getRepository(string $name): RepositoryInterface
     {
         return Repository::fromName($this->getName(), $name, $this);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getAccessTokensUrl(): string
+    {
+        return $this->data->access_tokens_url;
     }
 }
