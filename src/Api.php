@@ -123,7 +123,7 @@ final class Api implements ApiInterface
 
             $organizations = $this->getAll("/app/installations", [], function ($items) {
                 foreach ($items as $data) {
-                    yield new Organization($data, $this, $this->client, $this->cache);
+                    yield Organization::fromApiResponse($data, $this, $this->client, $this->cache);
                 }
             });
 

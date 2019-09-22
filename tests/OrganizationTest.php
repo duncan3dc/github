@@ -39,7 +39,7 @@ class OrganizationTest extends TestCase
             ],
             "access_tokens_url" => "https://api.github.com/GIVE_ME_TOKEN",
         ];
-        $organization = new Organization($data, $this->api, $this->client);
+        $organization = Organization::fromApiResponse($data, $this->api, $this->client);
         $this->organization = new Intruder($organization);
     }
 

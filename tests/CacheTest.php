@@ -4,6 +4,7 @@ namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\Organization;
+use duncan3dc\GitHub\OrganizationInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
 use Mockery;
@@ -14,7 +15,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class CacheTest extends TestCase
 {
-    /** @var Organization */
+    /** @var OrganizationInterface */
     private $organization;
 
     /** @var ClientInterface|MockInterface */
@@ -44,7 +45,7 @@ class CacheTest extends TestCase
         $this->cache->shouldReceive("get")->once()->with("github-token-user1", "")->andReturn("TOKEN123");
         $this->cache->shouldReceive("get")->once()->with("github-token-expires-user1", "")->andReturn(time() + 600);
 
-        $this->organization = new Organization($data, $api, $this->client, $this->cache);
+        $this->organization = Organization::fromApiResponse($data, $api, $this->client, $this->cache);
     }
 
 

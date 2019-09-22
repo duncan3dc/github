@@ -50,14 +50,42 @@ final class Organization implements OrganizationInterface
 
 
     /**
-     * Create a new instance.
+     * @param string $name The name of the organization or user
+     * @param ApiInterface $api The GitHub app this installation is for
+     * @param ClientInterface $client The HTTP client to communicate via
+     * @param CacheInterface $cache
      *
+     * @return OrganizationInterface
+     */
+    public static function fromName(string $name, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null): OrganizationInterface
+    {
+        $data = $api->get("orgs/{$name}");
+
+        return new self($data, $api, $client, $cache);
+    }
+
+
+    /**
+     * @var \stdClass $data This organization's data returned from the API
+     * @param ApiInterface $api The GitHub app this installation is for
+     * @param ClientInterface $client The HTTP client to communicate via
+     * @param CacheInterface $cache
+     *
+     * @return OrganizationInterface
+     */
+    public static function fromApiResponse(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null): OrganizationInterface
+    {
+        return new self($data, $api, $client, $cache);
+    }
+
+
+    /**
      * @var \stdClass $data This organization's data returned from the API
      * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
      * @param CacheInterface $cache
      */
-    public function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null)
+    private function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null)
     {
         $this->data = $data;
         $this->api = $api;
