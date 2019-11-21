@@ -12,6 +12,7 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+
 use function assert;
 use function is_resource;
 use function iterator_to_array;

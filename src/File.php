@@ -3,6 +3,7 @@
 namespace duncan3dc\GitHub;
 
 use duncan3dc\GitHub\Exceptions\UnexpectedValueException;
+
 use function base64_decode;
 
 final class File implements FileInterface

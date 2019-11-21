@@ -4,6 +4,7 @@ namespace duncan3dc\GitHub;
 
 use duncan3dc\GitHub\Exceptions\LogicException;
 use Psr\Http\Message\ResponseInterface;
+
 use function strtotime;
 use function substr;
 use function trim;

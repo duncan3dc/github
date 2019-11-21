@@ -9,9 +9,10 @@ use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Psr\Http\Message\ResponseInterface;
+use Psr\SimpleCache\CacheInterface;
+
 use function count;
 use function iterator_to_array;
-use Psr\SimpleCache\CacheInterface;
 use function substr;
 use function time;
 use function trim;

@@ -11,6 +11,7 @@ use duncan3dc\GitHub\TreeInterface;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+
 use function is_array;
 use function iterator_to_array;
 use function json_decode;

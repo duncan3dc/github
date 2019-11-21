@@ -23,7 +23,7 @@ class HttpTraitTest extends TestCase
     {
         $this->api = Mockery::mock(ApiInterface::class);
 
-        $this->http = new class($this->api) {
+        $this->http = new class ($this->api) {
             use HttpTrait;
 
             /** @var ApiInterface */
@@ -38,7 +38,6 @@ class HttpTraitTest extends TestCase
             {
                 return $this->api->request($method, $url, $data);
             }
-
         };
     }
 

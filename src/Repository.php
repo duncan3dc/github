@@ -3,6 +3,7 @@
 namespace duncan3dc\GitHub;
 
 use Psr\Http\Message\ResponseInterface;
+
 use function substr;
 use function trim;
 

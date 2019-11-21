@@ -12,6 +12,7 @@ use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
+
 use function is_array;
 
 class OrganizationTest extends TestCase
