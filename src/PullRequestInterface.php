@@ -49,6 +49,15 @@ interface PullRequestInterface extends ApiInterface
     public function getCommit(): string;
 
     /**
+     * Get the mergeable state of this PR.
+     *
+     * The specific values returned by this function are undefined by GitHub
+     *
+     * @return string
+     */
+    public function getMergeableState(): string;
+
+    /**
      * Add a comment to the pr.
      *
      * @return void

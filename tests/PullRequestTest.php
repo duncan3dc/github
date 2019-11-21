@@ -136,6 +136,33 @@ class PullRequestTest extends TestCase
     }
 
 
+    public function testGetMergeableState1(): void
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
+        $response->shouldReceive("getBody")->once()->with()->andReturn('{"mergeable_state":"blocked"}');
+
+        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+
+        $this->assertSame("blocked", $this->pull->getMergeableState());
+    }
+
+
+    public function testGetMergeableState2(): void
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
+        $response->shouldReceive("getBody")->once()->with()->andReturn('{"mergeable_state":"dirty"}');
+
+        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+
+        $this->assertSame("dirty", $this->pull->getMergeableState());
+
+        # Ensure a second call doesn't trigger another API request
+        $this->assertSame("dirty", $this->pull->getMergeableState());
+    }
+
+
     public function testAddComment(): void
     {
         $pull = $this->pull->withCommit("abc123");

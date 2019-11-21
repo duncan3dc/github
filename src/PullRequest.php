@@ -26,6 +26,9 @@ final class PullRequest implements PullRequestInterface
      */
     private $number;
 
+    /** @var \stdClass|null */
+    private $data;
+
     /**
      * @var string The version of this pr we are working with.
      */
@@ -133,16 +136,37 @@ final class PullRequest implements PullRequestInterface
 
 
     /**
+     * Lazy load the full data for this pr.
+     *
+     * @return \stdClass
+     */
+    private function getData(): \stdClass
+    {
+        if ($this->data === null) {
+            $this->data = $this->get("");
+        }
+
+        return $this->data;
+    }
+
+
+    /**
      * @inheritDoc
      */
     public function getCommit(): string
     {
         if ($this->commit === null) {
-            $data = $this->get("");
-            $this->commit = $data->head->sha;
+            $this->commit = $this->getData()->head->sha;
         }
 
         return $this->commit;
+    }
+
+
+    /** @inheritDoc */
+    public function getMergeableState(): string
+    {
+        return $this->getData()->mergeable_state;
     }
 
 
