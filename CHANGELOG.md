@@ -4,6 +4,14 @@
 
 --------
 
+## 0.4.0 - 2019-11-21
+
+### Added
+
+* [Api] Added a `TokenApi` class for use with an existing GitHub token (eg via GitHub actions).
+
+--------
+
 ## 0.3.0 - 2019-09-22
 
 ### Added
