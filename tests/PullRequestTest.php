@@ -3,6 +3,7 @@
 namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\ApiInterface;
+use duncan3dc\GitHub\BranchInterface;
 use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\PullRequestInterface;
 use duncan3dc\GitHub\RepositoryInterface;
@@ -133,6 +134,21 @@ class PullRequestTest extends TestCase
         $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
 
         $this->assertSame("def456", $this->pull->getCommit());
+    }
+
+
+    public function testGetBranch1(): void
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
+        $response->shouldReceive("getBody")->once()->with()->andReturn('{"head":{"ref":"my-special-feature"}}');
+
+        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+
+        $branch = Mockery::mock(BranchInterface::class);
+        $this->repository->shouldReceive("getBranch")->once()->with("my-special-feature")->andReturn($branch);
+
+        $this->assertSame($branch, $this->pull->getBranch());
     }
 
 

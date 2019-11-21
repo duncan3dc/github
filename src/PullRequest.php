@@ -29,6 +29,9 @@ final class PullRequest implements PullRequestInterface
     /** @var \stdClass|null */
     private $data;
 
+    /** @var BranchInterface */
+    private $branch;
+
     /**
      * @var string The version of this pr we are working with.
      */
@@ -160,6 +163,17 @@ final class PullRequest implements PullRequestInterface
         }
 
         return $this->commit;
+    }
+
+
+    /** @inheritDoc */
+    public function getBranch(): BranchInterface
+    {
+        if ($this->branch === null) {
+            $this->branch = $this->repository->getBranch($this->getData()->head->ref);
+        }
+
+        return $this->branch;
     }
 
 

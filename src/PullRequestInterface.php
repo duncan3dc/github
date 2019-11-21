@@ -49,6 +49,13 @@ interface PullRequestInterface extends ApiInterface
     public function getCommit(): string;
 
     /**
+     * Get the branch this PR is for.
+     *
+     * @return BranchInterface
+     */
+    public function getBranch(): BranchInterface;
+
+    /**
      * Get the mergeable state of this PR.
      *
      * The specific values returned by this function are undefined by GitHub
