@@ -12,11 +12,6 @@ final class PullRequest implements PullRequestInterface
     use HttpTrait;
 
     /**
-     * @var ApiInterface The Api instance to communicate with GitHub.
-     */
-    private $api;
-
-    /**
      * @var RepositoryInterface The repository this pr is part of.
      */
     private $repository;
@@ -43,13 +38,11 @@ final class PullRequest implements PullRequestInterface
      *
      * @param RepositoryInterface $repository The repository this pr is part of
      * @param int $number The unique ID of this pr
-     * @param ApiInterface $api The Api instance to communicate with GitHub.
      */
-    public function __construct(RepositoryInterface $repository, int $number, ApiInterface $api)
+    public function __construct(RepositoryInterface $repository, int $number)
     {
         $this->repository = $repository;
         $this->number = $number;
-        $this->api = $api;
     }
 
 
@@ -59,7 +52,7 @@ final class PullRequest implements PullRequestInterface
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $url = $this->getUrl($url);
-        return $this->api->request($method, $url, $data);
+        return $this->repository->request($method, $url, $data);
     }
 
 
@@ -80,7 +73,7 @@ final class PullRequest implements PullRequestInterface
             return $path;
         }
 
-        $url = "repos/" . $this->repository->getFullName() . "/pulls/" . $this->getNumber();
+        $url = "pulls/" . $this->getNumber();
 
         $path = trim($path, "/");
         if ($path !== "") {

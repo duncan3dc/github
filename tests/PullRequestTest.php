@@ -2,7 +2,6 @@
 
 namespace duncan3dc\GitHubTests;
 
-use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\BranchInterface;
 use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\PullRequestInterface;
@@ -20,21 +19,16 @@ class PullRequestTest extends TestCase
     /** @var PullRequestInterface */
     private $pull;
 
-    /** @var ApiInterface|MockInterface */
-    private $api;
-
     /** @var RepositoryInterface|MockInterface */
     private $repository;
 
 
     public function setUp(): void
     {
-        $this->api = Mockery::mock(ApiInterface::class);
-
         $this->repository = Mockery::mock(RepositoryInterface::class);
         $this->repository->shouldReceive("getFullName")->with()->andReturn("github/octocat");
 
-        $this->pull = new PullRequest($this->repository, 27, $this->api);
+        $this->pull = new PullRequest($this->repository, 27);
     }
 
 
@@ -47,11 +41,11 @@ class PullRequestTest extends TestCase
     public function urlProvider(): iterable
     {
         $data = [
-            ""                  =>  "repos/github/octocat/pulls/27",
-            "test"              =>  "repos/github/octocat/pulls/27/test",
+            ""                  =>  "pulls/27",
+            "test"              =>  "pulls/27/test",
             "/test"             =>  "/test",
-            "test/"             =>  "repos/github/octocat/pulls/27/test",
-            "test/one/two/"     =>  "repos/github/octocat/pulls/27/test/one/two",
+            "test/"             =>  "pulls/27/test",
+            "test/one/two/"     =>  "pulls/27/test/one/two",
             "https://test.com/" =>  "https://test.com/",
         ];
         foreach ($data as $input => $expected) {
@@ -65,7 +59,7 @@ class PullRequestTest extends TestCase
     {
         $response = Mockery::mock(ResponseInterface::class);
 
-        $this->api->shouldReceive("request")->with("GET", $expected, [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", $expected, [])->andReturn($response);
 
         $result = $this->pull->request("GET", $input);
         $this->assertSame($response, $result);
@@ -92,7 +86,7 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getHeader")->once()->with("Link")->andReturn(null);
         $response->shouldReceive("getBody")->once()->with()->andReturn('["file"]');
 
-        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27/files", [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27/files", [])->andReturn($response);
 
         $files = $this->pull->getFiles();
         $files = is_array($files) ? $files : iterator_to_array($files);
@@ -108,7 +102,7 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getHeader")->once()->with("Link")->andReturn(null);
         $response->shouldReceive("getBody")->once()->with()->andReturn('["comment"]');
 
-        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27/comments", [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27/comments", [])->andReturn($response);
 
         $comments = $this->pull->getComments();
         $comments = is_array($comments) ? $comments : iterator_to_array($comments);
@@ -131,7 +125,7 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{"head":{"sha":"def456"}}');
 
-        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27", [])->andReturn($response);
 
         $this->assertSame("def456", $this->pull->getCommit());
     }
@@ -143,7 +137,7 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{"head":{"ref":"my-special-feature"}}');
 
-        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27", [])->andReturn($response);
 
         $branch = Mockery::mock(BranchInterface::class);
         $this->repository->shouldReceive("getBranch")->once()->with("my-special-feature")->andReturn($branch);
@@ -158,7 +152,7 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{"mergeable_state":"blocked"}');
 
-        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27", [])->andReturn($response);
 
         $this->assertSame("blocked", $this->pull->getMergeableState());
     }
@@ -170,7 +164,7 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{"mergeable_state":"dirty"}');
 
-        $this->api->shouldReceive("request")->with("GET", "repos/github/octocat/pulls/27", [])->andReturn($response);
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27", [])->andReturn($response);
 
         $this->assertSame("dirty", $this->pull->getMergeableState());
 
@@ -187,9 +181,9 @@ class PullRequestTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->with()->andReturn('{}');
 
-        $this->api->shouldReceive("request")
+        $this->repository->shouldReceive("request")
             ->once()
-            ->with("POST", "repos/github/octocat/pulls/27/comments", [
+            ->with("POST", "pulls/27/comments", [
                 "body"      =>  "Some words",
                 "commit_id" =>  "abc123",
                 "path"      =>  "README.md",

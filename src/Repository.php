@@ -199,7 +199,7 @@ final class Repository implements RepositoryInterface
      */
     public function getPullRequest(int $number): PullRequestInterface
     {
-        return new PullRequest($this, $number, $this->api);
+        return new PullRequest($this, $number);
     }
 
 
