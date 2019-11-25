@@ -3,6 +3,7 @@
 namespace duncan3dc\GitHubTests;
 
 use duncan3dc\GitHub\BranchInterface;
+use duncan3dc\GitHub\Issues\Label;
 use duncan3dc\GitHub\PullRequest;
 use duncan3dc\GitHub\PullRequestInterface;
 use duncan3dc\GitHub\RepositoryInterface;
@@ -13,6 +14,8 @@ use Psr\Http\Message\ResponseInterface;
 
 use function is_array;
 use function iterator_to_array;
+use function json_decode;
+use function reset;
 
 class PullRequestTest extends TestCase
 {
@@ -170,6 +173,27 @@ class PullRequestTest extends TestCase
 
         # Ensure a second call doesn't trigger another API request
         $this->assertSame("dirty", $this->pull->getMergeableState());
+    }
+
+
+    public function testGetLabels1(): void
+    {
+        $response = Helper::getResponse("pull_requests");
+        $pulls = json_decode($response->getBody());
+        $data = reset($pulls);
+        $pull = PullRequest::fromListResponse($data, $this->repository);
+
+        $labels = $pull->getLabels();
+        $labels = is_array($labels) ? $labels : iterator_to_array($labels);
+        $this->assertCount(1, $labels);
+
+        /** @var Label $label */
+        $label = reset($labels);
+
+        $this->assertSame(208045946, $label->getId());
+        $this->assertSame("bug", $label->getName());
+        $this->assertSame("Something isn't working", $label->getDescription());
+        $this->assertSame("f29513", $label->getColor());
     }
 
 

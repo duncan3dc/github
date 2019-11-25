@@ -2,6 +2,8 @@
 
 namespace duncan3dc\GitHub;
 
+use duncan3dc\GitHub\Issues\Label;
+
 interface PullRequestInterface extends ApiInterface
 {
     /**
@@ -63,6 +65,13 @@ interface PullRequestInterface extends ApiInterface
      * @return string
      */
     public function getMergeableState(): string;
+
+    /**
+     * Get the labels attached to this pr.
+     *
+     * @return Label[]
+     */
+    public function getLabels(): iterable;
 
     /**
      * Add a comment to the pr.

@@ -2,6 +2,7 @@
 
 namespace duncan3dc\GitHub;
 
+use duncan3dc\GitHub\Issues\Label;
 use Psr\Http\Message\ResponseInterface;
 
 use function substr;
@@ -221,6 +222,15 @@ final class PullRequest implements PullRequestInterface
     public function getMergeableState(): string
     {
         return $this->getFullData()->mergeable_state;
+    }
+
+
+    /** @inheritDoc */
+    public function getLabels(): iterable
+    {
+        foreach ($this->getListData()->labels as $data) {
+            yield new Label($data);
+        }
     }
 
 
