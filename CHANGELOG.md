@@ -4,6 +4,14 @@
 
 --------
 
+## 0.5.0 - 2019-11-25
+
+### Added
+
+* [PullRequest] Added `getMergeableState()` and `getBranch()` methods.
+
+--------
+
 ## 0.4.0 - 2019-11-21
 
 ### Added
