@@ -11,6 +11,15 @@ final class PullRequest implements PullRequestInterface
 {
     use HttpTrait;
 
+    /** @var int If this pr has been created with just a number */
+    private const NOT_LOADED = 0;
+
+    /** @var int If this pr was created from a list response */
+    private const LIST_LOADED = 1;
+
+    /** @var int If've fully loaded all of the pr data */
+    private const FULL_LOADED = 2;
+
     /**
      * @var RepositoryInterface The repository this pr is part of.
      */
@@ -20,6 +29,9 @@ final class PullRequest implements PullRequestInterface
      * @var int The unique ID of this pr.
      */
     private $number;
+
+    /** @var int The state of the $data property */
+    private $loaded = self::NOT_LOADED;
 
     /** @var \stdClass|null */
     private $data;
@@ -31,6 +43,24 @@ final class PullRequest implements PullRequestInterface
      * @var string The version of this pr we are working with.
      */
     private $commit;
+
+
+    /**
+     * Create a new instance from an API request for a list of prs.
+     *
+     * @param \stdClass $data The basic data from the GitHub Api
+     * @param RepositoryInterface $repository The Repository this pr is part of
+     *
+     * @return PullRequestInterface
+     */
+    public static function fromListResponse(\stdClass $data, RepositoryInterface $repository): PullRequestInterface
+    {
+        $pull = new self($repository, $data->number);
+        $pull->data = $data;
+        $pull->loaded = self::LIST_LOADED;
+        return $pull;
+    }
+
 
 
     /**
@@ -132,14 +162,30 @@ final class PullRequest implements PullRequestInterface
 
 
     /**
+     * Lazy load the basic data for this pr.
+     *
+     * @return \stdClass
+     */
+    private function getListData(): \stdClass
+    {
+        if ($this->loaded === self::LIST_LOADED && $this->data !== null) {
+            return $this->data;
+        }
+
+        return $this->getFullData();
+    }
+
+
+    /**
      * Lazy load the full data for this pr.
      *
      * @return \stdClass
      */
-    private function getData(): \stdClass
+    private function getFullData(): \stdClass
     {
-        if ($this->data === null) {
+        if ($this->loaded !== self::FULL_LOADED || $this->data === null) {
             $this->data = $this->get("");
+            $this->loaded = self::FULL_LOADED;
         }
 
         return $this->data;
@@ -152,7 +198,7 @@ final class PullRequest implements PullRequestInterface
     public function getCommit(): string
     {
         if ($this->commit === null) {
-            $this->commit = $this->getData()->head->sha;
+            $this->commit = $this->getListData()->head->sha;
         }
 
         return $this->commit;
@@ -163,7 +209,8 @@ final class PullRequest implements PullRequestInterface
     public function getBranch(): BranchInterface
     {
         if ($this->branch === null) {
-            $this->branch = $this->repository->getBranch($this->getData()->head->ref);
+            $name = $this->getListData()->head->ref;
+            $this->branch = $this->repository->getBranch($name);
         }
 
         return $this->branch;
@@ -173,7 +220,7 @@ final class PullRequest implements PullRequestInterface
     /** @inheritDoc */
     public function getMergeableState(): string
     {
-        return $this->getData()->mergeable_state;
+        return $this->getFullData()->mergeable_state;
     }
 
 

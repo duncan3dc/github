@@ -5,18 +5,22 @@ namespace duncan3dc\GitHubTests;
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\BranchInterface;
 use duncan3dc\GitHub\PullRequest;
+use duncan3dc\GitHub\PullRequestInterface;
 use duncan3dc\GitHub\Repository;
 use duncan3dc\GitHub\RepositoryInterface;
 use duncan3dc\GitHub\TagInterface;
+use GuzzleHttp\Psr7\Response;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
+use function date;
 use function is_array;
 use function iterator_to_array;
 use function json_decode;
 use function json_encode;
+use function reset;
 
 class RepositoryTest extends TestCase
 {
@@ -252,6 +256,36 @@ class RepositoryTest extends TestCase
 
         $this->assertInstanceOf(BranchInterface::class, $branch);
         $this->assertSame("south", $branch->getName());
+    }
+
+
+    public function testGetPullRequests1(): void
+    {
+        $response = Helper::getResponse("pull_requests");
+
+        $this->api->shouldReceive("request")
+            ->once()
+            ->with("GET", "repos/github/octocat/pulls", [])
+            ->andReturn($response);
+
+        $pulls = $this->repository->getPullRequests();
+        $pulls = is_array($pulls) ? $pulls : iterator_to_array($pulls);
+
+        $this->assertContainsOnlyInstancesOf(PullRequestInterface::class, $pulls);
+
+        /** @var PullRequestInterface $pull */
+        $pull = reset($pulls);
+
+        # Ensure this information is available without another API request
+        $this->assertSame(1347, $pull->getNumber());
+        $this->assertSame("6dcb09b5b57875f334f61aebed695e2e4193db5e", $pull->getCommit());
+
+        # Ensure other information can be lazily loaded
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->andReturn(200);
+        $response->shouldReceive("getBody")->andReturn('{"mergeable_state":"stale"}');
+        $this->api->shouldReceive("request")->once()->with("GET", "repos/github/octocat/pulls/1347", [])->andReturn($response);
+        $this->assertSame("stale", $pull->getMergeableState());
     }
 
 

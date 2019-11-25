@@ -194,6 +194,16 @@ final class Repository implements RepositoryInterface
     }
 
 
+    /** @inheritDoc */
+    public function getPullRequests(array $options = []): iterable
+    {
+        $data = $this->getAll("pulls", $options);
+        foreach ($data as $item) {
+            yield PullRequest::fromListResponse($item, $this);
+        }
+    }
+
+
     /**
      * @inheritDoc
      */
