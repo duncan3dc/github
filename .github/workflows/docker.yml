@@ -1,7 +1,4 @@
-on:
-  push:
-    tags:
-      - '*'
+on: push
 
 jobs:
   docker:
@@ -18,7 +15,7 @@ jobs:
       - name: Create Docker Containers
         run: |
           docker build . \
-            -t duncan3dc/github:$(echo ${GITHUB_REF:10})-php-${{ matrix.php }} \
+            -t duncan3dc/github:0.5.0-php-${{ matrix.php }} \
             --build-arg PHP_VERSION=${{ matrix.php }} \
             --build-arg DEPENDENCIES=update
 
