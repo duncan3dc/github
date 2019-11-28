@@ -1,0 +1,29 @@
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - 7.2
+          - 7.3
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Create Docker Containers
+        run: |
+          docker build . \
+            -t duncan3dc/github:$(echo ${GITHUB_REF:10})-php-${{ matrix.php }} \
+            --build-arg PHP_VERSION=${{ matrix.php }} \
+            --build-arg DEPENDENCIES=update
+
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Push
+        run: docker push duncan3dc/github

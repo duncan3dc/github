@@ -12,3 +12,7 @@ RUN composer self-update
 
 COPY . /app
 WORKDIR /app
+
+# Install the library dependencies
+ARG DEPENDENCIES
+RUN if [ "$DEPENDENCIES" = "update" ]; then composer update --working-dir=/app --no-dev --prefer-dist --optimize-autoloader; fi
