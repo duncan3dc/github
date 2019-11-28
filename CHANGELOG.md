@@ -4,6 +4,21 @@
 
 --------
 
+## 0.5.0 - 2019-11-28
+
+### Added
+
+* [Repository] Added a `getPullRequests()` method to get PRs.
+* [PullRequest] Added a `getLabels()` method to get labels attached to a PR.
+* [PullRequest] Added a `getBranch()` method.
+* [PullRequest] Added a `getMergeableState()` method.
+
+### Changed
+
+* [PullRequest] Dropped the ApiInterface parameter from the constructor.
+
+--------
+
 ## 0.4.0 - 2019-11-21
 
 ### Added
