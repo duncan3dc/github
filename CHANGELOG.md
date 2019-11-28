@@ -4,6 +4,14 @@
 
 --------
 
+## 0.9.1 - 2025-05-13
+
+### Added
+
+* Automated docker image builds, no code changes.
+
+--------
+
 ## 0.9.0 - 2024-12-19
 
 ### Changed
