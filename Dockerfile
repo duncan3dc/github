@@ -10,4 +10,5 @@ RUN curl https://getcomposer.org/download/1.9.0/composer.phar -o /usr/local/sbin
 RUN chmod +x /usr/local/sbin/composer
 RUN composer self-update
 
+COPY . /app
 WORKDIR /app
