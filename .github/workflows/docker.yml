@@ -1,0 +1,37 @@
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - "8.0"
+          - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare the tag name
+        id: tag
+        run: |
+          echo "tag=${{ github.ref_name }}-php-${{ matrix.php }}" >> $GITHUB_OUTPUT
+
+      - name: Create Docker Containers
+        run: |
+          docker build . \
+            -t duncan3dc/github:${{ steps.tag.outputs.tag }} \
+            --build-arg PHP_VERSION=${{ matrix.php }} \
+            --build-arg DEPENDENCIES=update
+
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Push
+        run: docker push duncan3dc/github:${{ steps.tag.outputs.tag }}
