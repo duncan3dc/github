@@ -28,7 +28,7 @@ jobs:
       - name: Create Docker Container
         run: |
           docker build . -t ci-image --build-arg PHP_VERSION=${{ matrix.php }}
-          docker run --interactive --detach --volume ${{ github.workspace }}:/app --name ci ci-image
+          docker run --interactive --detach --name ci ci-image
 
       - name: Install Dependencies
         run: docker exec ci composer update --no-interaction --no-ansi --prefer-dist ${{ matrix.composer }}

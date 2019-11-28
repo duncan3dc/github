@@ -7,4 +7,5 @@ RUN if [ "$COVERAGE" = "pcov" ]; then pecl install pcov && docker-php-ext-enable
 RUN apt update && apt install -y git zip
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+COPY . /app
 WORKDIR /app
