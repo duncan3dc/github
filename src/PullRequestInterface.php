@@ -58,6 +58,13 @@ interface PullRequestInterface extends ApiInterface
     public function getBranch(): BranchInterface;
 
     /**
+     * Get the base branch this PR is targeting.
+     *
+     * @return BranchInterface
+     */
+    public function getBaseBranch(): BranchInterface;
+
+    /**
      * Get the mergeable state of this PR.
      *
      * The specific values returned by this function are undefined by GitHub

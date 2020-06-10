@@ -4,6 +4,14 @@
 
 --------
 
+## 0.6.0 - 2020-06-10
+
+### Added
+
+* [PullRequest] Added a `getBaseBranch()` method.
+
+--------
+
 ## 0.5.0 - 2019-11-28
 
 ### Added

@@ -40,6 +40,9 @@ final class PullRequest implements PullRequestInterface
     /** @var BranchInterface */
     private $branch;
 
+    /** @var BranchInterface */
+    private $base;
+
     /**
      * @var string The version of this pr we are working with.
      */
@@ -215,6 +218,17 @@ final class PullRequest implements PullRequestInterface
         }
 
         return $this->branch;
+    }
+
+
+    public function getBaseBranch(): BranchInterface
+    {
+        if ($this->base === null) {
+            $name = $this->getListData()->base->ref;
+            $this->base = $this->repository->getBranch($name);
+        }
+
+        return $this->base;
     }
 
 

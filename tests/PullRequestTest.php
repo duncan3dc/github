@@ -15,6 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 use function is_array;
 use function iterator_to_array;
 use function json_decode;
+use function json_encode;
 use function reset;
 
 class PullRequestTest extends TestCase
@@ -146,6 +147,24 @@ class PullRequestTest extends TestCase
         $this->repository->shouldReceive("getBranch")->once()->with("my-special-feature")->andReturn($branch);
 
         $this->assertSame($branch, $this->pull->getBranch());
+    }
+
+
+    public function testGetBaseBranch1(): void
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive("getStatusCode")->once()->andReturn(200);
+        $response->shouldReceive("getBody")->once()->with()->andReturn(json_encode([
+            "head" => ["ref" => "my-special-feature"],
+            "base" => ["ref" => "release"],
+        ]));
+
+        $this->repository->shouldReceive("request")->with("GET", "pulls/27", [])->andReturn($response);
+
+        $branch = Mockery::mock(BranchInterface::class);
+        $this->repository->shouldReceive("getBranch")->once()->with("release")->andReturn($branch);
+
+        $this->assertSame($branch, $this->pull->getBaseBranch());
     }
 
 
