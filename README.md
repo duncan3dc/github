@@ -5,7 +5,7 @@ Full documentation is available at http://duncan3dc.github.io/github/
 PHPDoc API documentation is also available at [http://duncan3dc.github.io/github/api/](http://duncan3dc.github.io/github/api/namespaces/duncan3dc.GitHub.html)  
 
 [![release](https://poser.pugx.org/duncan3dc/github/version.svg)](https://packagist.org/packages/duncan3dc/github)
-[![build](https://travis-ci.org/duncan3dc/github.svg?branch=master)](https://travis-ci.org/duncan3dc/github)
+[![build](https://github.com/duncan3dc/github/workflows/.github/workflows/buildcheck.yml/badge.svg?branch=main)](https://github.com/duncan3dc/github/actions/workflows/buildcheck.yml)
 [![coverage](https://codecov.io/gh/duncan3dc/github/graph/badge.svg)](https://codecov.io/gh/duncan3dc/github)
 
 
