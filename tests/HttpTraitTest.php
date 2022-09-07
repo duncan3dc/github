@@ -15,7 +15,7 @@ class HttpTraitTest extends TestCase
     /** @var ApiInterface|MockInterface */
     private $api;
 
-    /** @var HttpTrait */
+    /** @var ApiInterface HttpTrait */
     private $http;
 
 
@@ -34,6 +34,10 @@ class HttpTraitTest extends TestCase
                 $this->api = $api;
             }
 
+
+            /**
+             * @param array<string, mixed> $data
+             */
             public function request(string $method, string $url, array $data = []): ResponseInterface
             {
                 return $this->api->request($method, $url, $data);

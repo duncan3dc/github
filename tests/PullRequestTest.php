@@ -42,6 +42,9 @@ class PullRequestTest extends TestCase
     }
 
 
+    /**
+     * @return iterable<array<string>>
+     */
     public function urlProvider(): iterable
     {
         $data = [
@@ -88,14 +91,17 @@ class PullRequestTest extends TestCase
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getHeader")->once()->with("Link")->andReturn(null);
-        $response->shouldReceive("getBody")->once()->with()->andReturn('["file"]');
+        $response->shouldReceive("getBody")->once()->with()->andReturn('[{"name":"file.txt"}]');
 
         $this->repository->shouldReceive("request")->with("GET", "pulls/27/files", [])->andReturn($response);
 
         $files = $this->pull->getFiles();
-        $files = is_array($files) ? $files : iterator_to_array($files);
+        $result = [];
+        foreach ($files as $file) {
+            $result[] = (array) $file;
+        }
 
-        $this->assertSame(["file"], $files);
+        $this->assertSame([["name" => "file.txt"]], $result);
     }
 
 
@@ -104,14 +110,17 @@ class PullRequestTest extends TestCase
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getHeader")->once()->with("Link")->andReturn(null);
-        $response->shouldReceive("getBody")->once()->with()->andReturn('["comment"]');
+        $response->shouldReceive("getBody")->once()->with()->andReturn('[{"comment":"hi"}]');
 
         $this->repository->shouldReceive("request")->with("GET", "pulls/27/comments", [])->andReturn($response);
 
         $comments = $this->pull->getComments();
-        $comments = is_array($comments) ? $comments : iterator_to_array($comments);
+        $result = [];
+        foreach ($comments as $comment) {
+            $result[] = (array) $comment;
+        }
 
-        $this->assertSame(["comment"], $comments);
+        $this->assertSame([["comment" => "hi"]], $result);
     }
 
 

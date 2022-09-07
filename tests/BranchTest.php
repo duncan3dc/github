@@ -74,6 +74,9 @@ class BranchTest extends TestCase
     }
 
 
+    /**
+     * @return iterable<array<string>>
+     */
     public function urlProvider(): iterable
     {
         $data = [

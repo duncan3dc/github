@@ -42,7 +42,7 @@ class CacheTest extends TestCase
 
         $this->cache = Mockery::mock(CacheInterface::class);
         $this->cache->shouldReceive("get")->once()->with("github-token-user1", "")->andReturn("TOKEN123");
-        $this->cache->shouldReceive("get")->once()->with("github-token-expires-user1", "")->andReturn(time() + 600);
+        $this->cache->shouldReceive("get")->once()->with("github-token-expires-user1", 0)->andReturn(time() + 600);
 
         $this->organization = new Organization($data, $api, $this->client, $this->cache);
     }

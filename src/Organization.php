@@ -104,7 +104,7 @@ final class Organization implements OrganizationInterface
     /**
      * @param string $method
      * @param string $url
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return ResponseInterface
      */
@@ -129,7 +129,7 @@ final class Organization implements OrganizationInterface
 
         $response = $this->client->request($method, $url, $params);
 
-        if ($response->getStatusCode() === 304) {
+        if ($response->getStatusCode() === 304 && $cachedResponse) {
             return $cachedResponse;
         }
 
@@ -179,6 +179,7 @@ final class Organization implements OrganizationInterface
      */
     public function getRepositories(): iterable
     {
+        /** @var \Traversable<Repository> $repositories */
         $repositories = $this->getAll("installation/repositories", [], function (\stdClass $data) {
             foreach ($data->repositories as $item) {
                 yield Repository::fromApiResponse($item, $this);

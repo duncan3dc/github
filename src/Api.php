@@ -36,7 +36,7 @@ final class Api implements ApiInterface
      */
     private $client;
 
-    /** @Var CacheInterface|null */
+    /** @var CacheInterface|null */
     private $cache;
 
     /**
@@ -76,7 +76,7 @@ final class Api implements ApiInterface
      *
      * @param string $method The HTTP verb to use for the request
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return ResponseInterface
      */
@@ -121,6 +121,7 @@ final class Api implements ApiInterface
         if ($this->organizations === null) {
             $this->organizations = [];
 
+            /** @var \Traversable<Organization> $organizations */
             $organizations = $this->getAll("/app/installations", [], function ($items) {
                 foreach ($items as $data) {
                     yield new Organization($data, $this, $this->client, $this->cache);

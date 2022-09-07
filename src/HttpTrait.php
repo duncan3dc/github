@@ -18,7 +18,7 @@ trait HttpTrait
      *
      * @param string $method The HTTP verb to use for the request
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return ResponseInterface
      */
@@ -57,7 +57,7 @@ trait HttpTrait
      * Send a POST request and return the response.
      *
      * @param string $url The url to issue the request to
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -72,7 +72,7 @@ trait HttpTrait
      * Send a PUT request and return the response.
      *
      * @param string $url The url to issue the request to
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -87,7 +87,7 @@ trait HttpTrait
      * Send a PATCH request and return the response.
      *
      * @param string $url The url to issue the request to
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -102,7 +102,7 @@ trait HttpTrait
      * Send a DELETE request and return the response.
      *
      * @param string $url The url to issue the request to
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -117,7 +117,7 @@ trait HttpTrait
      * Send a GET request and return the response.
      *
      * @param string $url The url to issue the request to
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -134,10 +134,10 @@ trait HttpTrait
      * This method will loop through all the pages until one returns no results
      *
      * @param string $url The url to issue the request to
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      * @param callable $callback An optional handler to yield items via
      *
-     * @return \Traversable|\stdClass[]
+     * @return \Traversable<\stdClass|mixed> Based on the return type of the callback
      */
     public function getAll(string $url, array $data = [], callable $callback = null): \Traversable
     {

@@ -160,7 +160,7 @@ class TreeTest extends TestCase
         $this->expectExceptionMessage("The requested file does not exist: file77.txt");
         $this->tree->getFile("file77.txt");
     }
-    public function testGetFile3()
+    public function testGetFile3(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Unable to find the requested file, there are too many in the repository");

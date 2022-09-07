@@ -43,11 +43,11 @@ class TokenApiTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "yep", "date": "today"}');
         $this->client->shouldReceive("request")->once()->with("GET", "https://test.com", Mockery::on(function (array $params) {
-            $this->assertSame(["ok"], $params["query"]);
+            $this->assertSame(["arg" => "ok"], $params["query"]);
             return true;
         }))->andReturn($response);
 
-        $result = $this->api->get("https://test.com", ["ok"]);
+        $result = $this->api->get("https://test.com", ["arg" => "ok"]);
 
         $this->assertSame("yep", $result->name);
         $this->assertSame("today", $result->date);
@@ -64,11 +64,11 @@ class TokenApiTest extends TestCase
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->once()->andReturn('{"name": "yep", "date": "today"}');
         $this->client->shouldReceive("request")->once()->with("POST", "https://api.github.com/endpoint", Mockery::on(function (array $params) {
-            $this->assertSame(["ok"], $params["json"]);
+            $this->assertSame(["arg" => "ok"], $params["json"]);
             return true;
         }))->andReturn($response);
 
-        $result = $this->api->post("/endpoint", ["ok"]);
+        $result = $this->api->post("/endpoint", ["arg" => "ok"]);
 
         $this->assertSame("yep", $result->name);
         $this->assertSame("today", $result->date);

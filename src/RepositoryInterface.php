@@ -77,7 +77,7 @@ interface RepositoryInterface extends ApiInterface
     public function getDefaultBranch(): BranchInterface;
 
     /**
-     * @param array $options See https://developer.github.com/v3/pulls/#parameters
+     * @param array<string, mixed> $options See https://developer.github.com/v3/pulls/#parameters
      *
      * @return PullRequestInterface[]
      */

@@ -45,7 +45,7 @@ final class TokenApi implements ApiInterface
      *
      * @param string $method The HTTP verb to use for the request
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return ResponseInterface
      */

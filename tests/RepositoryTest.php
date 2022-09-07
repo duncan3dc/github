@@ -164,6 +164,9 @@ class RepositoryTest extends TestCase
     }
 
 
+    /**
+     * @return iterable<array<string>>
+     */
     public function urlProvider(): iterable
     {
         $data = [
@@ -185,9 +188,9 @@ class RepositoryTest extends TestCase
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive("getStatusCode")->once()->andReturn(200);
         $response->shouldReceive("getBody")->andReturn('{"stuff": "data"}');
-        $this->api->shouldReceive("request")->with("POST", $expected, ["stuff"])->andReturn($response);
+        $this->api->shouldReceive("request")->with("POST", $expected, ["arg" => "stuff"])->andReturn($response);
 
-        $result = $this->repository->post($input, ["stuff"]);
+        $result = $this->repository->post($input, ["arg" => "stuff"]);
         $this->assertSame(["stuff" => "data"], (array) $result);
     }
 
@@ -207,6 +210,7 @@ class RepositoryTest extends TestCase
         $this->assertContainsOnlyInstancesOf(BranchInterface::class, $branches);
 
         $branch = reset($branches);
+        self::assertInstanceOf(BranchInterface::class, $branch);
 
         # Ensure this information is available without another API request
         $this->assertSame("master", $branch->getName());
@@ -313,6 +317,8 @@ class RepositoryTest extends TestCase
         $this->assertContainsOnlyInstancesOf(TagInterface::class, $tags);
 
         $tag = reset($tags);
+        self::assertInstanceOf(TagInterface::class, $tag);
+
         $this->assertSame("0.1.0", $tag->getName());
         $this->assertSame("252920787ec2cb36e5d14b3209873082d1995374", $tag->getCommit());
     }

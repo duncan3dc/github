@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
 use function assert;
-use function is_resource;
 use function iterator_to_array;
 use function openssl_pkey_export;
 use function openssl_pkey_new;
@@ -31,7 +30,7 @@ class ApiTest extends TestCase
     {
         # Generate a valid private key for testing
         $ssl = openssl_pkey_new();
-        assert(is_resource($ssl));
+        assert($ssl !== false);
         openssl_pkey_export($ssl, $key);
 
         $this->client = Mockery::mock(ClientInterface::class);
@@ -49,7 +48,7 @@ class ApiTest extends TestCase
     public function testConstructor(): void
     {
         $ssl = openssl_pkey_new();
-        assert(is_resource($ssl));
+        assert($ssl !== false);
         openssl_pkey_export($ssl, $key);
         $api = new Api(999, $key);
 

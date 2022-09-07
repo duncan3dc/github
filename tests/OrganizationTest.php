@@ -57,6 +57,9 @@ class OrganizationTest extends TestCase
     }
 
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     private function mockToken(): array
     {
         $this->organization->token = "XYZ789";
@@ -129,7 +132,7 @@ class OrganizationTest extends TestCase
 
         $expires = time() + 600;
         $cache->shouldReceive("get")->once()->with("github-token-thephpleague", "")->andReturn("CACHED123");
-        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", "")->andReturn($expires);
+        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", 0)->andReturn($expires);
 
         $this->organization->getToken();
         $this->assertSame("CACHED123", $this->organization->token);
@@ -146,7 +149,7 @@ class OrganizationTest extends TestCase
         $this->organization->cache = $cache;
 
         $cache->shouldReceive("get")->once()->with("github-token-thephpleague", "")->andReturn("");
-        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", "")->andReturn("");
+        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", 0)->andReturn("");
 
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
             "token" => "ABC123",
@@ -171,7 +174,7 @@ class OrganizationTest extends TestCase
         $this->organization->cache = $cache;
 
         $cache->shouldReceive("get")->once()->with("github-token-thephpleague", "")->andReturn("OLD123");
-        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", "")->andReturn(1490788000);
+        $cache->shouldReceive("get")->once()->with("github-token-expires-thephpleague", 0)->andReturn(1490788000);
 
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
             "token" => "ABC123",
@@ -187,6 +190,9 @@ class OrganizationTest extends TestCase
     }
 
 
+    /**
+     * @return iterable<array<string>>
+     */
     public function urlProvider(): iterable
     {
         $data = [
@@ -308,6 +314,7 @@ class OrganizationTest extends TestCase
         $this->assertContainsOnlyInstancesOf(RepositoryInterface::class, $repositories);
 
         $repository = reset($repositories);
+        self::assertInstanceOf(RepositoryInterface::class, $repository);
         $this->assertSame("api", $repository->getName());
     }
 }

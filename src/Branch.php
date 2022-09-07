@@ -108,7 +108,13 @@ final class Branch implements BranchInterface
 
 
     /**
-     * @inheritDoc
+     * Send a request and return the response.
+     *
+     * @param string $method The HTTP verb to use for the request
+     * @param string $url The url to issue the request to (https://api.github.com is optional)
+     * @param array<string, mixed> $data The parameters to send with the request
+     *
+     * @return ResponseInterface
      */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {

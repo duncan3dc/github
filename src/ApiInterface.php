@@ -11,7 +11,7 @@ interface ApiInterface
      *
      * @param string $method The HTTP verb to use for the request
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return ResponseInterface
      */
@@ -21,7 +21,7 @@ interface ApiInterface
      * Send a POST request and return the response.
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -31,7 +31,7 @@ interface ApiInterface
      * Send a PUT request and return the response.
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -41,7 +41,7 @@ interface ApiInterface
      * Send a PATCH request and return the response.
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -51,7 +51,7 @@ interface ApiInterface
      * Send a DELETE request and return the response.
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -61,7 +61,7 @@ interface ApiInterface
      * Send a GET request and return the response.
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      *
      * @return \stdClass
      */
@@ -73,7 +73,7 @@ interface ApiInterface
      * This method will loop through all the pages until one returns no results
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
-     * @param array $data The parameters to send with the request
+     * @param array<string, mixed> $data The parameters to send with the request
      * @param callable $callback An optional handler to yield items via
      *
      * @return \Traversable|\stdClass[]

@@ -7,5 +7,4 @@ parameters:
     - '/Access to an undefined property .*duncan3dc\\ObjectIntruder\\Intruder::/'
     - '/Call to an undefined method .*duncan3dc\\ObjectIntruder\\Intruder::/'
 
-    - '/^Property duncan3dc\\GitHubTests\\HttpTraitTest::\$http has invalid type duncan3dc\\GitHub\\HttpTrait\.$/'
     - '/^Property duncan3dc\\GitHubTests\\HttpTraitTest::\$http .* does not accept class@anonymous.*\.$/'
