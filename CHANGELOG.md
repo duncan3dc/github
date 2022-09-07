@@ -4,6 +4,14 @@
 
 --------
 
+## 0.7.0 - 2022-09-07
+
+### Changed
+
+* [Support] Added support for PHP 8.0 and 8.1.
+
+--------
+
 ## 0.6.0 - 2020-06-10
 
 ### Added
