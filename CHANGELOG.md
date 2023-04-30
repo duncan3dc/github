@@ -4,6 +4,15 @@
 
 --------
 
+## 0.8.0 - 2023-04-30
+
+### Changed
+
+* [Support] Added support for PHP 8.2.
+* [Support] Added support for Guzzle 7.
+
+--------
+
 ## 0.7.0 - 2022-09-07
 
 ### Changed
