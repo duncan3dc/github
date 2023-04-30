@@ -52,6 +52,7 @@ class BranchTest extends TestCase
             "protected" => 1,
         ];
         $data = json_decode((string) json_encode($data));
+        self::assertInstanceOf(\stdClass::class, $data);
         $branch = Branch::fromApiResponse($data, $this->api);
 
         $this->branch = new Intruder($branch);

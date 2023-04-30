@@ -51,45 +51,30 @@ final class File implements FileInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getName(): string
     {
         return $this->data->path;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getSize(): int
     {
         return $this->data->size;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getMode(): string
     {
         return $this->data->mode;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getHash(): string
     {
         return $this->data->sha;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getContents(): string
     {
         if ($this->contents === null) {

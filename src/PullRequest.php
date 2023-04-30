@@ -80,9 +80,6 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $url = $this->getUrl($url);
@@ -118,45 +115,30 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getRepository(): RepositoryInterface
     {
         return $this->repository;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getNumber(): int
     {
         return $this->number;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getFiles(): iterable
     {
         return $this->getAll("files");
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getComments(): iterable
     {
         return $this->getAll("comments");
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function withCommit(string $commit): PullRequestInterface
     {
         $pull = clone $this;
@@ -196,9 +178,6 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getCommit(): string
     {
         if ($this->commit === null) {
@@ -209,7 +188,6 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-    /** @inheritDoc */
     public function getBranch(): BranchInterface
     {
         if ($this->branch === null) {
@@ -232,14 +210,12 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-    /** @inheritDoc */
     public function getMergeableState(): string
     {
         return $this->getFullData()->mergeable_state;
     }
 
 
-    /** @inheritDoc */
     public function getLabels(): iterable
     {
         foreach ($this->getListData()->labels as $data) {
@@ -248,9 +224,6 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function addComment(string $comment, string $path, int $position): void
     {
         $this->post("comments", [

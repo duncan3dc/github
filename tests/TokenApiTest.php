@@ -18,7 +18,6 @@ class TokenApiTest extends TestCase
     private $client;
 
 
-    /** @inheritDoc */
     public function setUp(): void
     {
         $this->client = Mockery::mock(ClientInterface::class);
@@ -26,7 +25,6 @@ class TokenApiTest extends TestCase
     }
 
 
-    /** @inheritDoc */
     public function tearDown(): void
     {
         Mockery::close();

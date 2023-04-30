@@ -24,9 +24,6 @@ class CacheTest extends TestCase
     private $cache;
 
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $api = Mockery::mock(ApiInterface::class);
@@ -48,9 +45,6 @@ class CacheTest extends TestCase
     }
 
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         Mockery::close();

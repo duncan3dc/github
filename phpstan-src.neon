@@ -1,0 +1,3 @@
+parameters:
+  ignoreErrors:
+    - '/^Method duncan3dc\\GitHub\\PullRequest::get[a-zA-Z]+\(\) should return iterable<stdClass> but returns iterable\.$/'

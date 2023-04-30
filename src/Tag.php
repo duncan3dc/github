@@ -34,18 +34,12 @@ final class Tag implements TagInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getName(): string
     {
         return $this->data->name;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getCommit(): string
     {
         return $this->data->commit->sha;

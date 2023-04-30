@@ -45,9 +45,6 @@ final class Tree implements TreeInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDirectories(): iterable
     {
         if ($this->data->truncated) {
@@ -64,9 +61,6 @@ final class Tree implements TreeInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDirectory(string $name): DirectoryInterface
     {
         foreach ($this->data->tree as $item) {
@@ -89,9 +83,6 @@ final class Tree implements TreeInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function hasDirectory(string $name): bool
     {
         try {
@@ -104,9 +95,6 @@ final class Tree implements TreeInterface
     }
 
 
-    /**
-     * inheritDoc
-     */
     public function getFiles(): iterable
     {
         if ($this->data->truncated) {
@@ -123,9 +111,6 @@ final class Tree implements TreeInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getFile(string $name): FileInterface
     {
         foreach ($this->data->tree as $item) {
@@ -148,9 +133,6 @@ final class Tree implements TreeInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function hasFile(string $name): bool
     {
         try {

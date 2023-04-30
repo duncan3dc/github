@@ -133,7 +133,12 @@ class ApiTest extends TestCase
             }
         });
 
-        $this->assertSame(["scheduler", "orderpad"], iterator_to_array($result));
+        $data = [];
+        foreach ($result as $row) {
+            $data[] = $row;
+        }
+
+        $this->assertSame(["scheduler", "orderpad"], $data);
     }
 
 

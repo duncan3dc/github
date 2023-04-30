@@ -4,6 +4,8 @@ namespace duncan3dc\GitHub;
 
 use Psr\Http\Message\ResponseInterface;
 
+use function assert;
+use function is_string;
 use function substr;
 use function trim;
 
@@ -66,72 +68,48 @@ final class Repository implements RepositoryInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getName(): string
     {
         return $this->data->name;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getFullName(): string
     {
         return $this->data->full_name;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDescription(): string
     {
         return (string) $this->data->description;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function isPrivate(): bool
     {
         return $this->data->private ?? false;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function isPublic(): bool
     {
         return !$this->isPrivate();
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function isFork(): bool
     {
         return $this->data->fork ?? false;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function isArchived(): bool
     {
         return $this->data->archived ?? false;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $url = $this->getUrl($url);
@@ -160,32 +138,24 @@ final class Repository implements RepositoryInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getBranches(): iterable
     {
         $data = $this->getAll("branches");
 
         foreach ($data as $item) {
+            assert($item instanceof \stdClass);
             $url = $this->getUrl("branches/{$item->name}");
             yield Branch::fromListResponse($item, $url, $this->api);
         }
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDefaultBranch(): BranchInterface
     {
         return $this->getBranch($this->data->default_branch);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getBranch(string $branch): BranchInterface
     {
         $data = $this->get("branches/{$branch}");
@@ -194,33 +164,28 @@ final class Repository implements RepositoryInterface
     }
 
 
-    /** @inheritDoc */
     public function getPullRequests(array $options = []): iterable
     {
         $data = $this->getAll("pulls", $options);
         foreach ($data as $item) {
+            assert($item instanceof \stdClass);
             yield PullRequest::fromListResponse($item, $this);
         }
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getPullRequest(int $number): PullRequestInterface
     {
         return new PullRequest($this, $number);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getTags(): iterable
     {
         $data = $this->getAll("tags");
 
         foreach ($data as $item) {
+            assert($item instanceof \stdClass);
             yield Tag::fromListResponse($item);
         }
     }

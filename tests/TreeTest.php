@@ -54,7 +54,7 @@ class TreeTest extends TestCase
                 ],
             ],
         ];
-        $this->data = json_decode((string) json_encode($data));
+        $this->data = (object) json_decode((string) json_encode($data));
 
         $this->tree = Tree::fromApiResponse($this->data, $this->api);
     }

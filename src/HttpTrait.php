@@ -5,6 +5,7 @@ namespace duncan3dc\GitHub;
 use duncan3dc\GitHub\Exceptions\JsonException;
 use Psr\Http\Message\ResponseInterface;
 
+use function gettype;
 use function GuzzleHttp\Psr7\parse_header;
 use function is_array;
 use function json_decode;
@@ -47,6 +48,10 @@ trait HttpTrait
 
         if (is_array($data)) {
             $data = (object) $data;
+        }
+
+        if (!$data instanceof \stdClass) {
+            throw new JsonException("Unexpected data type: " . gettype($data));
         }
 
         return $data;
@@ -135,11 +140,11 @@ trait HttpTrait
      *
      * @param string $url The url to issue the request to
      * @param array<string, mixed> $data The parameters to send with the request
-     * @param callable $callback An optional handler to yield items via
+     * @param callable|null $callback An optional handler to yield items via
      *
-     * @return \Traversable<\stdClass|mixed> Based on the return type of the callback
+     * @return iterable<\stdClass|mixed> Based on the return type of the callback
      */
-    public function getAll(string $url, array $data = [], callable $callback = null): \Traversable
+    public function getAll(string $url, array $data = [], callable $callback = null): iterable
     {
         while (true) {
             $response = $this->request("GET", $url, $data);

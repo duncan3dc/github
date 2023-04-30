@@ -8,7 +8,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
 
 use function array_key_exists;
+use function assert;
 use function count;
+use function is_array;
+use function is_int;
+use function is_string;
 use function print_r;
 use function sha1;
 use function strtotime;
@@ -52,7 +56,7 @@ final class Organization implements OrganizationInterface
     /**
      * Create a new instance.
      *
-     * @var \stdClass $data This organization's data returned from the API
+     * @param \stdClass $data This organization's data returned from the API
      * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
      * @param CacheInterface $cache
@@ -72,9 +76,6 @@ final class Organization implements OrganizationInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $params = [
@@ -122,14 +123,15 @@ final class Organization implements OrganizationInterface
 
         $cachedResponse = $this->cache->get($cacheKey);
 
-        if ($cachedResponse) {
+        if (is_string($cachedResponse) && $cachedResponse !== "") {
             $cachedResponse = Psr7\parse_response($cachedResponse);
+            assert(is_array($params["headers"]));
             $params["headers"]["If-None-Match"] = $cachedResponse->getHeaderLine("ETag");
         }
 
         $response = $this->client->request($method, $url, $params);
 
-        if ($response->getStatusCode() === 304 && $cachedResponse) {
+        if ($response->getStatusCode() === 304 && $cachedResponse instanceof ResponseInterface) {
             return $cachedResponse;
         }
 
@@ -149,8 +151,14 @@ final class Organization implements OrganizationInterface
     private function getToken(): string
     {
         if ($this->token === "" && $this->cache) {
-            $this->token = $this->cache->get("github-token-" . $this->getName(), "");
-            $this->tokenExpires = $this->cache->get("github-token-expires-" . $this->getName(), 0);
+            $token = $this->cache->get("github-token-" . $this->getName(), "");
+            if (is_string($token)) {
+                $this->token = $token;
+            }
+            $expires = $this->cache->get("github-token-expires-" . $this->getName(), 0);
+            if (is_int($expires)) {
+                $this->tokenExpires = $expires;
+            }
         }
 
         # If we already have a token, and it's not expired yet then use it

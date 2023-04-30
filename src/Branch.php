@@ -151,45 +151,30 @@ final class Branch implements BranchInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getName(): string
     {
         return $this->data->name;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getCommit(): string
     {
         return $this->data->commit->sha;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getHead(): \stdClass
     {
         return $this->getData()->commit->commit;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDate(): int
     {
         return strtotime($this->getHead()->committer->date);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getProtection(): \stdClass
     {
         if (!$this->data->protected) {
@@ -216,54 +201,36 @@ final class Branch implements BranchInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDirectories(): iterable
     {
         return $this->getTree()->getDirectories();
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getDirectory(string $name): DirectoryInterface
     {
         return $this->getTree()->getDirectory($name);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function hasDirectory(string $name): bool
     {
         return $this->getTree()->hasDirectory($name);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getFiles(): iterable
     {
         return $this->getTree()->getFiles();
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getFile(string $name): FileInterface
     {
         return $this->getTree()->getFile($name);
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function hasFile(string $name): bool
     {
         return $this->getTree()->hasFile($name);

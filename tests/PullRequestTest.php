@@ -208,6 +208,7 @@ class PullRequestTest extends TestCase
     {
         $response = Helper::getResponse("pull_requests");
         $pulls = json_decode($response->getBody());
+        self::assertIsArray($pulls);
         $data = reset($pulls);
         $pull = PullRequest::fromListResponse($data, $this->repository);
 
