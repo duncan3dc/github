@@ -3,10 +3,10 @@
 namespace duncan3dc\GitHub;
 
 use duncan3dc\GitHub\Exceptions\JsonException;
+use GuzzleHttp\Psr7\Header;
 use Psr\Http\Message\ResponseInterface;
 
 use function gettype;
-use function GuzzleHttp\Psr7\parse_header;
 use function is_array;
 use function json_decode;
 use function json_last_error;
@@ -160,7 +160,7 @@ trait HttpTrait
 
             # Get the url for the next page of results
             $url = null;
-            $links = parse_header($response->getHeader("Link"));
+            $links = Header::parse($response->getHeader("Link"));
             foreach ($links as $link) {
                 if ($link["rel"] === "next") {
                     /**

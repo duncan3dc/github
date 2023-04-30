@@ -3,7 +3,7 @@
 namespace duncan3dc\GitHub;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Message;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
 
@@ -124,7 +124,7 @@ final class Organization implements OrganizationInterface
         $cachedResponse = $this->cache->get($cacheKey);
 
         if (is_string($cachedResponse) && $cachedResponse !== "") {
-            $cachedResponse = Psr7\parse_response($cachedResponse);
+            $cachedResponse = Message::parseResponse($cachedResponse);
             assert(is_array($params["headers"]));
             $params["headers"]["If-None-Match"] = $cachedResponse->getHeaderLine("ETag");
         }
@@ -136,7 +136,7 @@ final class Organization implements OrganizationInterface
         }
 
         if ($response->hasHeader("ETag")) {
-            $this->cache->set($cacheKey, Psr7\str($response));
+            $this->cache->set($cacheKey, Message::toString($response));
         }
 
         return $response;

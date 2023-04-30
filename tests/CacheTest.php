@@ -5,7 +5,7 @@ namespace duncan3dc\GitHubTests;
 use duncan3dc\GitHub\ApiInterface;
 use duncan3dc\GitHub\Organization;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Message;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
@@ -56,7 +56,7 @@ class CacheTest extends TestCase
      */
     public function testRequest1(): void
     {
-        $cached = Psr7\str(Helper::getResponse("repositories"));
+        $cached = Message::toString(Helper::getResponse("repositories"));
         $this->cache->shouldReceive("get")->once()->with("6641c0c9d99863ff412874d15a542d81c5a30b40")->andReturn($cached);
 
         $response = Mockery::mock(ResponseInterface::class);
@@ -81,7 +81,7 @@ class CacheTest extends TestCase
     public function testRequest2(): void
     {
         $response = Helper::getResponse("repositories");
-        $this->cache->shouldReceive("get")->once()->with("76f27edcfd3da781134266b248da5ba5d40b366d")->andReturn(Psr7\str($response));
+        $this->cache->shouldReceive("get")->once()->with("76f27edcfd3da781134266b248da5ba5d40b366d")->andReturn(Message::toString($response));
 
         $this->client->shouldReceive("request")->once()->with("GET", "https://api.github.com/repositories", [
             "headers" => [
@@ -93,7 +93,7 @@ class CacheTest extends TestCase
             ],
         ])->andReturn($response);
 
-        $this->cache->shouldReceive("set")->once()->with("76f27edcfd3da781134266b248da5ba5d40b366d", Psr7\str($response));
+        $this->cache->shouldReceive("set")->once()->with("76f27edcfd3da781134266b248da5ba5d40b366d", Message::toString($response));
 
         $result = $this->organization->request("GET", "repositories", ["max" => 2]);
         $this->assertSame($response, $result);
@@ -114,7 +114,7 @@ class CacheTest extends TestCase
             ],
         ])->andReturn($response);
 
-        $this->cache->shouldReceive("set")->once()->with("6641c0c9d99863ff412874d15a542d81c5a30b40", Psr7\str($response));
+        $this->cache->shouldReceive("set")->once()->with("6641c0c9d99863ff412874d15a542d81c5a30b40", Message::toString($response));
 
         $result = $this->organization->request("GET", "repositories");
         $this->assertSame($response, $result);

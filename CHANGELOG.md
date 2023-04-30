@@ -4,6 +4,14 @@
 
 --------
 
+## 0.8.1 - 2023-04-30
+
+### Changed
+
+* [Support] Require version of the Guzzle PSR library.
+
+--------
+
 ## 0.8.0 - 2023-04-30
 
 ### Changed
