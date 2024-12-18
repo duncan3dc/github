@@ -50,10 +50,10 @@ final class Api implements ApiInterface
      *
      * @param int $app The App ID to access the GitHub API via.
      * @param string $key The app key (.pem file contents)
-     * @param ClientInterface $client The HTTP client to communicate via
-     * @param CacheInterface $cache
+     * @param ?ClientInterface $client The HTTP client to communicate via
+     * @param ?CacheInterface $cache
      */
-    public function __construct(int $app, string $key, ClientInterface $client = null, CacheInterface $cache = null)
+    public function __construct(int $app, string $key, ?ClientInterface $client = null, ?CacheInterface $cache = null)
     {
         $this->app = $app;
         $this->key = $key;

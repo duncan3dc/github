@@ -74,9 +74,9 @@ interface ApiInterface
      *
      * @param string $url The url to issue the request to (https://api.github.com is optional)
      * @param array<string, mixed> $data The parameters to send with the request
-     * @param callable|null $callback An optional handler to yield items via
+     * @param ?callable $callback An optional handler to yield items via
      *
      * @return iterable<\stdClass|mixed> Based on the return type of the callback
      */
-    public function getAll(string $url, array $data = [], callable $callback = null): iterable;
+    public function getAll(string $url, array $data = [], ?callable $callback = null): iterable;
 }
