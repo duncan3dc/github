@@ -59,9 +59,9 @@ final class Organization implements OrganizationInterface
      * @param \stdClass $data This organization's data returned from the API
      * @param ApiInterface $api The GitHub app this installation is for
      * @param ClientInterface $client The HTTP client to communicate via
-     * @param CacheInterface $cache
+     * @param ?CacheInterface $cache
      */
-    public function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client, CacheInterface $cache = null)
+    public function __construct(\stdClass $data, ApiInterface $api, ClientInterface $client, ?CacheInterface $cache = null)
     {
         $this->data = $data;
         $this->api = $api;

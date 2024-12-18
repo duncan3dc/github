@@ -23,9 +23,9 @@ final class TokenApi implements ApiInterface
 
     /**
      * @param string $token
-     * @param ClientInterface $client
+     * @param ?ClientInterface $client
      */
-    public function __construct(string $token, ClientInterface $client = null)
+    public function __construct(string $token, ?ClientInterface $client = null)
     {
         $this->token = $token;
 
