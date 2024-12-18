@@ -4,6 +4,15 @@
 
 --------
 
+## 0.9.0 - 2024-12-19
+
+### Changed
+
+* [Support] Added support for PHP 8.3 and 8.3.
+* [Support] Dropped support for PHP 7.2, 7.3, and 7.4.
+
+--------
+
 ## 0.8.1 - 2023-04-30
 
 ### Changed

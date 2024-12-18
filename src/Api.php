@@ -5,8 +5,8 @@ namespace duncan3dc\GitHub;
 use duncan3dc\GitHub\Exceptions\NotFoundException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Psr\Http\Message\ResponseInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -27,7 +27,7 @@ final class Api implements ApiInterface
     private $app;
 
     /**
-     * @var string The private key for the app.
+     * @var non-empty-string The private key for the app.
      */
     private $key;
 
@@ -49,7 +49,7 @@ final class Api implements ApiInterface
      * Create a new instance.
      *
      * @param int $app The App ID to access the GitHub API via.
-     * @param string $key The app key (.pem file contents)
+     * @param non-empty-string $key The app key (.pem file contents)
      * @param ?ClientInterface $client The HTTP client to communicate via
      * @param ?CacheInterface $cache
      */
@@ -82,12 +82,15 @@ final class Api implements ApiInterface
      */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
-        $token = (new Builder())
-            ->setIssuer((string) $this->app)
-            ->setIssuedAt(time())
-            ->setExpiration(time() + 300)
-            ->sign(new Sha256(), new Key($this->key))
-            ->getToken();
+        $now = new \DateTimeImmutable(date("c"));
+        $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText($this->key));
+        $token = $config
+            ->builder()
+            ->issuedBy((string) $this->app)
+            ->issuedAt($now)
+            ->expiresAt($now->modify("+5 minutes"))
+            ->getToken($config->signer(), $config->signingKey())
+            ->toString();
 
         $params = [
             "headers" => [
