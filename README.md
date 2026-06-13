@@ -39,6 +39,30 @@ foreach ($app->getOrganizations() as $organization) {
 $organization = $app->getOrganization("duncan3dc");
 ```
 
+You can also use this library with a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens):
+
+```php
+use duncan3dc\GitHub\User;
+
+$user = new User("ghp_5bKLDnrE4Qsu8gi6JAzVzZ1psv1C8x0PZUB0");
+
+foreach ($user->getRepositories() as $repository) {
+    echo $repository->getName() . "\n";
+}
+
+foreach ($user->getFollowers() as $follower) {
+    echo $follower . "\n";
+}
+
+foreach ($user->getFollowing() as $following) {
+    echo $following . "\n";
+}
+
+foreach ($user->getStarred() as $starred) {
+    echo $starred . "\n";
+}
+```
+
 _Read more at http://duncan3dc.github.io/github/_  
 
 
