@@ -80,6 +80,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isPrivate());
     }
+
+
     public function testIsPrivate2(): void
     {
         $data = (object) [
@@ -88,6 +90,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertFalse($repository->isPrivate());
     }
+
+
     public function testIsPrivate3(): void
     {
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
@@ -100,6 +104,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertTrue($repository->isPublic());
     }
+
+
     public function testIsPublic2(): void
     {
         $data = (object) [
@@ -108,6 +114,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isPublic());
     }
+
+
     public function testIsPublic3(): void
     {
         $data = (object) [
@@ -123,6 +131,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertFalse($repository->isFork());
     }
+
+
     public function testIsFork2(): void
     {
         $data = (object) [
@@ -131,6 +141,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isFork());
     }
+
+
     public function testIsFork3(): void
     {
         $data = (object) [
@@ -146,6 +158,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse(new \stdClass(), $this->api);
         $this->assertFalse($repository->isArchived());
     }
+
+
     public function testIsArchived2(): void
     {
         $data = (object) [
@@ -154,6 +168,8 @@ class RepositoryTest extends TestCase
         $repository = Repository::fromApiResponse($data, $this->api);
         $this->assertTrue($repository->isArchived());
     }
+
+
     public function testIsArchived3(): void
     {
         $data = (object) [
@@ -180,6 +196,8 @@ class RepositoryTest extends TestCase
             yield [$input, $expected];
         }
     }
+
+
     /**
      * @dataProvider urlProvider
      */

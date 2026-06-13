@@ -11,6 +11,7 @@ interface TreeInterface
      */
     public function getDirectories(): iterable;
 
+
     /**
      * Get a directory by its name.
      *
@@ -19,6 +20,7 @@ interface TreeInterface
      * @return DirectoryInterface
      */
     public function getDirectory(string $name): DirectoryInterface;
+
 
     /**
      * Check if a directory exists.
@@ -29,12 +31,14 @@ interface TreeInterface
      */
     public function hasDirectory(string $name): bool;
 
+
     /**
      * Get the files in this directory.
      *
      * @return iterable&FileInterface[]
      */
     public function getFiles(): iterable;
+
 
     /**
      * Get a file by its name.
@@ -44,6 +48,7 @@ interface TreeInterface
      * @return FileInterface
      */
     public function getFile(string $name): FileInterface;
+
 
     /**
      * Check if a file exists.

@@ -66,8 +66,8 @@ class OrganizationTest extends TestCase
         $this->organization->tokenExpires = time() + 60;
 
         return [
-            "headers"   =>  [
-                "Authorization" =>  "token {$this->organization->token}",
+            "headers" => [
+                "Authorization" => "token {$this->organization->token}",
             ],
         ];
     }
@@ -85,6 +85,8 @@ class OrganizationTest extends TestCase
         $this->assertSame("ABC123", $this->organization->token);
         $this->assertSame(1490788835, $this->organization->tokenExpires);
     }
+
+
     public function testGetToken2(): void
     {
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
@@ -99,6 +101,8 @@ class OrganizationTest extends TestCase
         # Ensure that calling `getToken()` again before the token expires doesn't hit the mock client
         $this->organization->getToken();
     }
+
+
     public function testGetToken3(): void
     {
         $this->api->shouldReceive("post")->once()->with("https://api.github.com/GIVE_ME_TOKEN")->andReturn((object) [
@@ -196,16 +200,18 @@ class OrganizationTest extends TestCase
     public function urlProvider(): iterable
     {
         $data = [
-            "test"              =>  "https://api.github.com/test",
-            "/test"             =>  "https://api.github.com/test",
-            "/test/"            =>  "https://api.github.com/test",
-            "/test/one/two/"    =>  "https://api.github.com/test/one/two",
-            "https://test.com/" =>  "https://test.com/",
+            "test" => "https://api.github.com/test",
+            "/test" => "https://api.github.com/test",
+            "/test/" => "https://api.github.com/test",
+            "/test/one/two/" => "https://api.github.com/test/one/two",
+            "https://test.com/" => "https://test.com/",
         ];
         foreach ($data as $input => $expected) {
             yield [$input, $expected];
         }
     }
+
+
     /**
      * @dataProvider urlProvider
      */

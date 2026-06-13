@@ -11,6 +11,7 @@ interface TagInterface
      */
     public function getName(): string;
 
+
     /**
      * Get the hash of the commit this tag references.
      *

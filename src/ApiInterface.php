@@ -17,6 +17,7 @@ interface ApiInterface
      */
     public function request(string $method, string $url, array $data = []): ResponseInterface;
 
+
     /**
      * Send a POST request and return the response.
      *
@@ -26,6 +27,7 @@ interface ApiInterface
      * @return \stdClass
      */
     public function post(string $url, array $data = []): \stdClass;
+
 
     /**
      * Send a PUT request and return the response.
@@ -37,6 +39,7 @@ interface ApiInterface
      */
     public function put(string $url, array $data = []): \stdClass;
 
+
     /**
      * Send a PATCH request and return the response.
      *
@@ -46,6 +49,7 @@ interface ApiInterface
      * @return \stdClass
      */
     public function patch(string $url, array $data = []): \stdClass;
+
 
     /**
      * Send a DELETE request and return the response.
@@ -57,6 +61,7 @@ interface ApiInterface
      */
     public function delete(string $url, array $data = []): \stdClass;
 
+
     /**
      * Send a GET request and return the response.
      *
@@ -66,6 +71,7 @@ interface ApiInterface
      * @return \stdClass
      */
     public function get(string $url, array $data = []): \stdClass;
+
 
     /**
      * Send a GET request and return the response.

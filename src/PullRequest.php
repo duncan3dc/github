@@ -66,7 +66,6 @@ final class PullRequest implements PullRequestInterface
     }
 
 
-
     /**
      * Create a new instance.
      *
@@ -227,10 +226,10 @@ final class PullRequest implements PullRequestInterface
     public function addComment(string $comment, string $path, int $position): void
     {
         $this->post("comments", [
-            "body"      =>  $comment,
-            "commit_id" =>  $this->getCommit(),
-            "path"      =>  $path,
-            "position"  =>  $position,
+            "body" => $comment,
+            "commit_id" => $this->getCommit(),
+            "path" => $path,
+            "position" => $position,
         ]);
     }
 }

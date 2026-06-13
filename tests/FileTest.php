@@ -77,6 +77,8 @@ class FileTest extends TestCase
         $contents = $this->file->getContents();
         $this->assertSame("hello world\n", $contents);
     }
+
+
     public function testGetContents2(): void
     {
         $this->api->shouldReceive("get")->once()->with("http://test.com/")->andReturn((object) ["content" => "aGVsbG8gd29ybGQK"]);
@@ -88,6 +90,8 @@ class FileTest extends TestCase
         $contents = $this->file->getContents();
         $this->assertSame("hello world\n", $contents);
     }
+
+
     public function testGetContents3(): void
     {
         $this->api->shouldReceive("get")->once()->with("http://test.com/")->andReturn((object) ["content" => "@"]);

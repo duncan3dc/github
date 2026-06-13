@@ -91,6 +91,8 @@ class DirectoryTest extends TestCase
         $result = $this->directory->hasDirectory("thing");
         $this->assertSame(true, $result);
     }
+
+
     public function testHasDirectory2(): void
     {
         $this->directory->tree = Mockery::mock(TreeInterface::class);
@@ -132,6 +134,8 @@ class DirectoryTest extends TestCase
         $result = $this->directory->hasFile("thing");
         $this->assertSame(true, $result);
     }
+
+
     public function testHasFile2(): void
     {
         $this->directory->tree = Mockery::mock(TreeInterface::class);

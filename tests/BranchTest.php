@@ -92,6 +92,8 @@ class BranchTest extends TestCase
             yield [$input, $expected];
         }
     }
+
+
     /**
      * @dataProvider urlProvider
      */
@@ -144,6 +146,8 @@ class BranchTest extends TestCase
         $result = $this->branch->getProtection();
         $this->assertSame(["settings" => "protected"], (array) $result);
     }
+
+
     public function testGetProtection2(): void
     {
         $data = (object) [
@@ -196,6 +200,8 @@ class BranchTest extends TestCase
         $result = $this->branch->hasDirectory("stuff");
         $this->assertSame(true, $result);
     }
+
+
     public function testHasDirectory2(): void
     {
         $this->branch->tree = Mockery::mock(TreeInterface::class);
@@ -237,6 +243,8 @@ class BranchTest extends TestCase
         $result = $this->branch->hasFile("thing");
         $this->assertSame(true, $result);
     }
+
+
     public function testHasFile2(): void
     {
         $this->branch->tree = Mockery::mock(TreeInterface::class);
