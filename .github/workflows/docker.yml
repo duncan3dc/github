@@ -1,7 +1,9 @@
+name: docker
+
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   docker:
