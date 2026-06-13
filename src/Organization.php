@@ -76,6 +76,12 @@ final class Organization implements OrganizationInterface
     }
 
 
+    public function getInstallationId(): int
+    {
+        return $this->data->id;
+    }
+
+
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $params = [
