@@ -11,12 +11,14 @@ interface FileInterface
      */
     public function getName(): string;
 
+
     /**
      * Get the size of this file.
      *
      * @return int
      */
     public function getSize(): int;
+
 
     /**
      * Get the permissions and special mode flags of this file.
@@ -25,12 +27,14 @@ interface FileInterface
      */
     public function getMode(): string;
 
+
     /**
      * Get the hash of this file.
      *
      * @return string
      */
     public function getHash(): string;
+
 
     /**
      * Download this file from GitHub.

@@ -13,12 +13,14 @@ interface PullRequestInterface extends ApiInterface
      */
     public function getRepository(): RepositoryInterface;
 
+
     /**
      * Get the number of this pr.
      *
      * @return int
      */
     public function getNumber(): int;
+
 
     /**
      * Get all the files that are touched by this pr.
@@ -27,12 +29,14 @@ interface PullRequestInterface extends ApiInterface
      */
     public function getFiles(): iterable;
 
+
     /**
      * Get all the comments on this pr.
      *
      * @return iterable&\stdClass[]
      */
     public function getComments(): iterable;
+
 
     /**
      * Set the version of this pr we are working with.
@@ -43,12 +47,14 @@ interface PullRequestInterface extends ApiInterface
      */
     public function withCommit(string $commit): PullRequestInterface;
 
+
     /**
      * Get the version of this pr we are working with.
      *
      * @return string
      */
     public function getCommit(): string;
+
 
     /**
      * Get the branch this PR is for.
@@ -57,12 +63,14 @@ interface PullRequestInterface extends ApiInterface
      */
     public function getBranch(): BranchInterface;
 
+
     /**
      * Get the base branch this PR is targeting.
      *
      * @return BranchInterface
      */
     public function getBaseBranch(): BranchInterface;
+
 
     /**
      * Get the mergeable state of this PR.
@@ -73,12 +81,14 @@ interface PullRequestInterface extends ApiInterface
      */
     public function getMergeableState(): string;
 
+
     /**
      * Get the labels attached to this pr.
      *
      * @return Label[]
      */
     public function getLabels(): iterable;
+
 
     /**
      * Add a comment to the pr.

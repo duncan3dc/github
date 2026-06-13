@@ -11,6 +11,7 @@ interface RepositoryInterface extends ApiInterface
      */
     public function getName(): string;
 
+
     /**
      * Get the full name of this repository (including the owner).
      *
@@ -18,12 +19,14 @@ interface RepositoryInterface extends ApiInterface
      */
     public function getFullName(): string;
 
+
     /**
-    * Get the description of this repository.
-    *
-    * @return string
-    */
+     * Get the description of this repository.
+     *
+     * @return string
+     */
     public function getDescription(): string;
+
 
     /**
      * Check if this repository is private.
@@ -32,12 +35,14 @@ interface RepositoryInterface extends ApiInterface
      */
     public function isPrivate(): bool;
 
+
     /**
      * Check if this repository is public.
      *
      * @return bool
      */
     public function isPublic(): bool;
+
 
     /**
      * Check if this repository is a fork of another.
@@ -46,6 +51,7 @@ interface RepositoryInterface extends ApiInterface
      */
     public function isFork(): bool;
 
+
     /**
      * Check if this repository is archived.
      *
@@ -53,12 +59,14 @@ interface RepositoryInterface extends ApiInterface
      */
     public function isArchived(): bool;
 
+
     /**
      * Get all the branches in this repository.
      *
      * @return iterable&BranchInterface[]
      */
     public function getBranches(): iterable;
+
 
     /**
      * Get a branch from this repository.
@@ -69,6 +77,7 @@ interface RepositoryInterface extends ApiInterface
      */
     public function getBranch(string $branch): BranchInterface;
 
+
     /**
      * Get the default branch for this repository.
      *
@@ -76,12 +85,14 @@ interface RepositoryInterface extends ApiInterface
      */
     public function getDefaultBranch(): BranchInterface;
 
+
     /**
      * @param array<string, mixed> $options See https://developer.github.com/v3/pulls/#parameters
      *
      * @return PullRequestInterface[]
      */
     public function getPullRequests(array $options = []): iterable;
+
 
     /**
      * Get a pull request from this repository.
@@ -91,6 +102,7 @@ interface RepositoryInterface extends ApiInterface
      * @return PullRequestInterface
      */
     public function getPullRequest(int $number): PullRequestInterface;
+
 
     /**
      * Get all the tags in this repository.

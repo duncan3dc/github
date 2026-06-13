@@ -26,6 +26,7 @@ class ApiTest extends TestCase
     /** @var ClientInterface|MockInterface */
     private $client;
 
+
     public function setUp(): void
     {
         # Generate a valid private key for testing
@@ -119,6 +120,8 @@ class ApiTest extends TestCase
             ["id" => 54634039, "name" => "sql-mock"],
         ], $data);
     }
+
+
     public function testGetAll2(): void
     {
         $response = Helper::getResponse("get_all");
@@ -226,6 +229,8 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(OrganizationInterface::class, $organization);
         $this->assertSame("duncan3dc", $organization->getName());
     }
+
+
     public function testGetOrganization2(): void
     {
         $response = Helper::getResponse("organizations");

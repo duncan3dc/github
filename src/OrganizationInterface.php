@@ -11,12 +11,14 @@ interface OrganizationInterface extends ApiInterface
      */
     public function getName(): string;
 
+
     /**
      * Get all of the repositories for this installation.
      *
      * @return RepositoryInterface[]
      */
     public function getRepositories(): iterable;
+
 
     /**
      * Get a repository instance.

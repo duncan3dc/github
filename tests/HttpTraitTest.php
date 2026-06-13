@@ -29,6 +29,7 @@ class HttpTraitTest extends TestCase
             /** @var ApiInterface */
             private $api;
 
+
             public function __construct(ApiInterface $api)
             {
                 $this->api = $api;
@@ -73,6 +74,8 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
+
+
     public function testPost2(): void
     {
         $this->setupResponse("POST", '{"WHAT_IS_THIS}');
@@ -90,6 +93,8 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
+
+
     public function testPut2(): void
     {
         $this->setupResponse("PUT", '{"WHAT_IS_THIS}');
@@ -107,6 +112,8 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
+
+
     public function testPatch2(): void
     {
         $this->setupResponse("PATCH", '{"WHAT_IS_THIS}');
@@ -124,6 +131,8 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
+
+
     public function testDelete2(): void
     {
         $this->setupResponse("DELETE", '{"WHAT_IS_THIS}');
@@ -141,6 +150,8 @@ class HttpTraitTest extends TestCase
 
         $this->assertSame(["result" => "yep"], (array) $result);
     }
+
+
     public function testGet2(): void
     {
         $this->setupResponse("GET", '{"WHAT_IS_THIS}');

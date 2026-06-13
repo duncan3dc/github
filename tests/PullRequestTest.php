@@ -48,17 +48,19 @@ class PullRequestTest extends TestCase
     public function urlProvider(): iterable
     {
         $data = [
-            ""                  =>  "pulls/27",
-            "test"              =>  "pulls/27/test",
-            "/test"             =>  "/test",
-            "test/"             =>  "pulls/27/test",
-            "test/one/two/"     =>  "pulls/27/test/one/two",
-            "https://test.com/" =>  "https://test.com/",
+            "" => "pulls/27",
+            "test" => "pulls/27/test",
+            "/test" => "/test",
+            "test/" => "pulls/27/test",
+            "test/one/two/" => "pulls/27/test/one/two",
+            "https://test.com/" => "https://test.com/",
         ];
         foreach ($data as $input => $expected) {
             yield [$input, $expected];
         }
     }
+
+
     /**
      * @dataProvider urlProvider
      */
@@ -237,10 +239,10 @@ class PullRequestTest extends TestCase
         $this->repository->shouldReceive("request")
             ->once()
             ->with("POST", "pulls/27/comments", [
-                "body"      =>  "Some words",
-                "commit_id" =>  "abc123",
-                "path"      =>  "README.md",
-                "position"  =>  4,
+                "body" => "Some words",
+                "commit_id" => "abc123",
+                "path" => "README.md",
+                "position" => 4,
             ])
             ->andReturn($response);
 
