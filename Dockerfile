@@ -9,6 +9,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY . /app
 WORKDIR /app
+RUN git config --global --add safe.directory /app
 
 # Install the library dependencies
 ARG DEPENDENCIES
